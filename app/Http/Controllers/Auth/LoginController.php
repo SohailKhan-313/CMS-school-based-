@@ -19,7 +19,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
@@ -28,26 +28,26 @@ class LoginController extends Controller
 
             // Redirect based on role
             if (auth()->user()->hasRole('admin')) {
-                return redirect()->route('admin');
+                return redirect()->route('home');
             }
 
             if (auth()->user()->hasRole('teacher')) {
-                return redirect()->route('teacher');
+                return redirect()->route('teachers.index');
             }
 
             if (auth()->user()->hasRole('accountant')) {
-                return redirect()->route('accountant');
+                return redirect()->route('accountant.index');
             }
 
             if (auth()->user()->hasRole('student')) {
-                return redirect()->route('student');
+                return redirect()->route('students.index');
             }
 
-            return redirect('/');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
-            'email' => 'Invalid credentials',
+            'email' => 'Invalid credentials. Please verify your email and password.',
         ]);
     }
 

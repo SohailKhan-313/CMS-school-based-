@@ -1,37 +1,35 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\accountantController;
-use App\Http\Controllers\adminController;
-use App\Http\Controllers\teacherController;
-use App\Http\Controllers\studentController;
+use App\Http\Controllers\AccountantController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\PermissionController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RoleController;
-use App\Http\Controllers\Auth\PermissionController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SchoolClassController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes (No Login Required)
+| Public Routes
 |--------------------------------------------------------------------------
 */
 
-// Welcome page
 Route::get('/', function () {
-    return redirect()->route('login'); // force login first
+    return redirect()->route('login');
 });
 
-// Login
+// Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
-// Logout (must be authenticated)
-Route::post('/logout', [LoginController::class, 'logout'])
-    ->middleware('auth')
-    ->name('logout');
-
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
+Route::post('/register', [RegisterController::class, 'store']);
 
 /*
 |--------------------------------------------------------------------------
@@ -41,52 +39,68 @@ Route::post('/logout', [LoginController::class, 'logout'])
 
 Route::middleware('auth')->group(function () {
 
-    // Dashboards
-   Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('home');
-    Route::get('/student', [studentController::class, 'index'])->name('student');
-    Route::get('/admin', [adminController::class, 'index'])->name('admin');
-    Route::get('/teacher', [teacherController::class, 'index'])->name('teacher');
-    Route::get('/accountant', [accountantController::class, 'index'])->name('accountant');
-
-    //Registration
-    Route::get('/register', [RegisterController::class, 'show'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
-
     // Logout
-    Route::post('/logout', [LoginController::class, 'logout'])
-        ->middleware('auth')
-        ->name('logout');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // Profile
-    Route::middleware('auth')->group(function () {
-         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    });
+    // Dashboard (Main Overview for all interconnected models)
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('home');
+    Route::get('/home', [DashboardController::class, 'index']);
 
-    // Roles
-    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
-    Route::get('/roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    Route::put('/roles/{role}', [RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+    // Profile Management
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    // Permissions
-    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-    Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
-    Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
-    Route::get('/permissions/{permission}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
-    Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
-    Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
+    // ----------------------------------------------------
+    // STUDENTS MODULE (CRUD + FPDF Reports)
+    // ----------------------------------------------------
+    Route::get('/students/export/pdf', [StudentController::class, 'exportPdf'])->name('students.pdf');
+    Route::get('/students/{student}/slip/pdf', [StudentController::class, 'printSlip'])->name('students.slip');
+    Route::resource('students', StudentController::class);
+    // Backward compatibility for login redirect and sidebar
+    Route::get('/student', function () {
+        return redirect()->route('students.index');
+    })->name('student');
 
-    // Users
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    // ----------------------------------------------------
+    // TEACHERS MODULE (CRUD + FPDF Reports)
+    // ----------------------------------------------------
+    Route::get('/teachers/export/pdf', [TeacherController::class, 'exportPdf'])->name('teachers.pdf');
+    Route::get('/teachers/{teacher}/profile/pdf', [TeacherController::class, 'printProfile'])->name('teachers.profile');
+    Route::resource('teachers', TeacherController::class);
+    Route::get('/teacher', function () {
+        return redirect()->route('teachers.index');
+    })->name('teacher');
+
+    // ----------------------------------------------------
+    // ACCOUNTANT / FEES MODULE (CRUD + FPDF Challans/Reports)
+    Route::get('/accountant/export/pdf', [AccountantController::class, 'exportPdf'])->name('accountant.pdf');
+    Route::get('/accountant/{invoice}/challan/pdf', [AccountantController::class, 'printChallan'])->name('accountant.challan');
+    Route::resource('accountant', AccountantController::class)->parameters(['accountant' => 'invoice']);
+    Route::get('/accountant-home', function () {
+        return redirect()->route('accountant.index');
+    })->name('accountant');
+
+    // ----------------------------------------------------
+    // SCHOOL CLASSES MODULE (CRUD + FPDF Roster)
+    // ----------------------------------------------------
+    Route::get('/classes/export/pdf', [SchoolClassController::class, 'exportPdf'])->name('classes.pdf');
+    Route::resource('classes', SchoolClassController::class);
+
+    // ----------------------------------------------------
+    // ADMIN MODULE (Overview + System Stats)
+    // ----------------------------------------------------
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin/export/users/pdf', [AdminController::class, 'exportUsersPdf'])->name('admin.users.pdf');
+
+    // ----------------------------------------------------
+    // SPATIE ROLES & PERMISSIONS MODULE
+    // ----------------------------------------------------
+    Route::resource('roles', RoleController::class);
+    Route::resource('permissions', PermissionController::class);
+
+    // ----------------------------------------------------
+    // USER MANAGEMENT MODULE
+    // ----------------------------------------------------
+    Route::resource('users', UserController::class);
 
 });

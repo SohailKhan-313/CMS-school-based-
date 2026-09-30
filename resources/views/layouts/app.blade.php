@@ -45,7 +45,7 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
 
     <!--begin::Required Plugin(AdminLTE)-->
-    <link rel="stylesheet" href="./css/adminlte.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.css') }}" />
     <!--end::Required Plugin(AdminLTE)-->
 
     <!-- apexcharts -->
@@ -295,65 +295,82 @@
                     <!--begin::Sidebar Menu-->
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="navigation"
                         aria-label="Main navigation" data-accordion="false" id="navigation">
-                       <li class="nav-item">
-                                <a href="{{ route('home') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                                    <p>Dashboard</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                                <i class="nav-icon bi bi-speedometer2"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+
                         @can ('show student')
                             <li class="nav-item">
-                                <a href="{{ route('student') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <a href="{{ route('students.index') }}" class="nav-link {{ request()->routeIs('students.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-mortarboard-fill"></i>
                                     <p>Students</p>
                                 </a>
                             </li>
                         @endcan
+
                         @can('show teacher')
                             <li class="nav-item">
-                                <a href="{{ route('teacher') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                                    <p>Teacher</p>
+                                <a href="{{ route('teachers.index') }}" class="nav-link {{ request()->routeIs('teachers.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-person-workspace"></i>
+                                    <p>Teachers</p>
                                 </a>
                             </li>
                         @endcan
+
+                        @can('show class')
+                            <li class="nav-item">
+                                <a href="{{ route('classes.index') }}" class="nav-link {{ request()->routeIs('classes.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-diagram-3-fill"></i>
+                                    <p>Classes & Sections</p>
+                                </a>
+                            </li>
+                        @endcan
+
                         @can('show accountant')
                             <li class="nav-item">
-                                <a href="{{ route('accountant') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                                    <p>Accountant</p>
+                                <a href="{{ route('accountant.index') }}" class="nav-link {{ request()->routeIs('accountant.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-cash-stack"></i>
+                                    <p>Fees & Accounts</p>
                                 </a>
                             </li>
                         @endcan
+
                         @can ('show admin')
                             <li class="nav-item">
-                                <a href="{{ route('admin') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
-                                    <p>Admin</p>
+                                <a href="{{ route('admin') }}" class="nav-link {{ request()->routeIs('admin*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-shield-lock-fill"></i>
+                                    <p>Admin Center</p>
                                 </a>
                             </li>
                         @endcan
+
+                        <li class="nav-header text-uppercase fs-7 text-secondary mt-2 px-3">System Access</li>
+
                         @can('see roles')
                             <li class="nav-item">
-                                <a href="{{ route('roles.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <a href="{{ route('roles.index') }}" class="nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-person-badge"></i>
                                     <p>Roles</p>
                                 </a>
                             </li>
                         @endcan
-                        @can('see permissions')
 
+                        @can('see permissions')
                             <li class="nav-item">
-                                <a href="{{ route('permissions.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-box-seam-fill"></i>
+                                <a href="{{ route('permissions.index') }}" class="nav-link {{ request()->routeIs('permissions.*') ? 'active' : '' }}">
+                                    <i class="nav-icon bi bi-key-fill"></i>
                                     <p>Permissions</p>
                                 </a>
                             </li>
                         @endcan
+
                         @can ('see users')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.index') }}">
-                                    <i class="nav-icon bi bi-people"></i> <!-- optional icon -->
+                                <a class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                                    <i class="nav-icon bi bi-people-fill"></i>
                                     <p>Users</p>
                                 </a>
                             </li>
@@ -439,180 +456,25 @@
 
     <!-- sortablejs -->
     <script>
-        new Sortable(document.querySelector('.connectedSortable'), {
-            group: 'shared',
-            handle: '.card-header',
-        });
+        const sortableElem = document.querySelector('.connectedSortable');
+        if (sortableElem) {
+            new Sortable(sortableElem, {
+                group: 'shared',
+                handle: '.card-header',
+            });
 
-        const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
-        cardHeaders.forEach((cardHeader) => {
-            cardHeader.style.cursor = 'move';
-        });
+            const cardHeaders = document.querySelectorAll('.connectedSortable .card-header');
+            cardHeaders.forEach((cardHeader) => {
+                cardHeader.style.cursor = 'move';
+            });
+        }
     </script>
 
     <!-- apexcharts -->
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.min.js"
         integrity="sha256-+vh8GkaU7C9/wbSLIcwq82tQ2wTf44aOHA8HlBMwRI8=" crossorigin="anonymous"></script>
 
-    <!-- ChartJS -->
-    <script>
-        // NOTICE!! DO NOT USE ANY OF THIS JAVASCRIPT
-        // IT'S ALL JUST JUNK FOR DEMO
-        // ++++++++++++++++++++++++++++++++++++++++++
-
-        const sales_chart_options = {
-            series: [
-                {
-                    name: 'Digital Goods',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                },
-                {
-                    name: 'Electronics',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                },
-            ],
-            chart: {
-                height: 300,
-                type: 'area',
-                toolbar: {
-                    show: false,
-                },
-            },
-            legend: {
-                show: false,
-            },
-            colors: ['#0d6efd', '#20c997'],
-            dataLabels: {
-                enabled: false,
-            },
-            stroke: {
-                curve: 'smooth',
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: [
-                    '2023-01-01',
-                    '2023-02-01',
-                    '2023-03-01',
-                    '2023-04-01',
-                    '2023-05-01',
-                    '2023-06-01',
-                    '2023-07-01',
-                ],
-            },
-            tooltip: {
-                x: {
-                    format: 'MMMM yyyy',
-                },
-            },
-        };
-
-        const sales_chart = new ApexCharts(
-            document.querySelector('#revenue-chart'),
-            sales_chart_options,
-        );
-        sales_chart.render();
-    </script>
-
-    <!-- jsvectormap -->
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/js/jsvectormap.min.js"
-        integrity="sha256-/t1nN2956BT869E6H4V1dnt0X5pAQHPytli+1nTZm2Y=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/maps/world.js"
-        integrity="sha256-XPpPaZlU8S/HWf7FZLAncLg2SAkP8ScUTII89x9D3lY=" crossorigin="anonymous"></script>
-
-    <!-- jsvectormap -->
-    <script>
-        // World map by jsVectorMap
-        new jsVectorMap({
-            selector: '#world-map',
-            map: 'world',
-        });
-
-        // Sparkline charts
-        const option_sparkline1 = {
-            series: [
-                {
-                    data: [1000, 1200, 920, 927, 931, 1027, 819, 930, 1021],
-                },
-            ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-
-        const sparkline1 = new ApexCharts(document.querySelector('#sparkline-1'), option_sparkline1);
-        sparkline1.render();
-
-        const option_sparkline2 = {
-            series: [
-                {
-                    data: [515, 519, 520, 522, 652, 810, 370, 627, 319, 630, 921],
-                },
-            ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-
-        const sparkline2 = new ApexCharts(document.querySelector('#sparkline-2'), option_sparkline2);
-        sparkline2.render();
-
-        const option_sparkline3 = {
-            series: [
-                {
-                    data: [15, 19, 20, 22, 33, 27, 31, 27, 19, 30, 21],
-                },
-            ],
-            chart: {
-                type: 'area',
-                height: 50,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            stroke: {
-                curve: 'straight',
-            },
-            fill: {
-                opacity: 0.3,
-            },
-            yaxis: {
-                min: 0,
-            },
-            colors: ['#DCE6EC'],
-        };
-
-        const sparkline3 = new ApexCharts(document.querySelector('#sparkline-3'), option_sparkline3);
-        sparkline3.render();
-    </script>
+    @stack('scripts')
     <!--end::Script-->
 </body>
 <!--end::Body-->

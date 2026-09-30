@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
-use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
@@ -12,6 +12,7 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::all();
+
         return view('permissions.index', compact('permissions'));
     }
 
@@ -25,7 +26,7 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:permissions,name'
+            'name' => 'required|unique:permissions,name',
         ]);
 
         Permission::create(['name' => $request->name]);
@@ -43,7 +44,7 @@ class PermissionController extends Controller
     public function update(Request $request, Permission $permission)
     {
         $request->validate([
-            'name' => 'required|unique:permissions,name,' . $permission->id
+            'name' => 'required|unique:permissions,name,'.$permission->id,
         ]);
 
         $permission->update(['name' => $request->name]);
@@ -55,6 +56,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
+
         return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
     }
 }

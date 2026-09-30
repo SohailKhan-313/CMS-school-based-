@@ -5,7 +5,12 @@
 
     <div class="d-flex justify-content-between mb-4">
         <h2 class="fw-bold fs-4">Users List</h2>
-        <a href="{{ route('users.create') }}" class="btn btn-primary">+ Add User</a>
+        <div class="d-flex gap-2">
+            <a href="{{ route('admin.users.pdf') }}" target="_blank" class="btn btn-outline-danger">
+                <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
+            </a>
+            <a href="{{ route('users.create') }}" class="btn btn-primary">+ Add User</a>
+        </div>
     </div>
 
     {{-- Success Message --}}
