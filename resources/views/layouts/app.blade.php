@@ -68,202 +68,100 @@
                 <!--begin::Container-->
                 <div class="container-fluid">
                     <!--begin::Start Navbar Links-->
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button">
-                                <i class="bi bi-list"></i>
+                            <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" title="Toggle Sidebar">
+                                <i class="bi bi-list fs-4"></i>
                             </a>
-                        </li>
-                        <li class="nav-item d-none d-md-block">
-                            <a href="#" class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item d-none d-md-block">
-                            <a href="#" class="nav-link">Contact</a>
                         </li>
                     </ul>
                     <!--end::Start Navbar Links-->
 
                     <!--begin::End Navbar Links-->
-                    <ul class="navbar-nav ms-auto">
-                        <!--begin::Navbar Search-->
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
+                        {{-- WhatsApp Icon --}}
                         <li class="nav-item">
-                            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                                <i class="bi bi-search"></i>
+                            <a class="nav-link text-success px-2" href="https://wa.me/{{ preg_replace('/[^0-9]/', '', config('services.contact.whatsapp', '923000000000')) }}" target="_blank" title="WhatsApp: {{ config('services.contact.whatsapp', '+92 300 0000000') }}">
+                                <i class="bi bi-whatsapp fs-5"></i>
                             </a>
                         </li>
-                        <!--end::Navbar Search-->
 
-                        <!--begin::Messages Dropdown Menu-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                                <i class="bi bi-chat-text"></i>
-                                <span class="navbar-badge badge text-bg-danger">3</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img src="./assets/img/user1-128x128.jpg" alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3" />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                Brad Diesel
-                                                <span class="float-end fs-7 text-danger"><i
-                                                        class="bi bi-star-fill"></i></span>
-                                            </h3>
-                                            <p class="fs-7">Call me whenever you can...</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!--end::Message-->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img src="./assets/img/user8-128x128.jpg" alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3" />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                John Pierce
-                                                <span class="float-end fs-7 text-secondary">
-                                                    <i class="bi bi-star-fill"></i>
-                                                </span>
-                                            </h3>
-                                            <p class="fs-7">I got your message bro</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!--end::Message-->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <!--begin::Message-->
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0">
-                                            <img src="./assets/img/user3-128x128.jpg" alt="User Avatar"
-                                                class="img-size-50 rounded-circle me-3" />
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <h3 class="dropdown-item-title">
-                                                Nora Silvester
-                                                <span class="float-end fs-7 text-warning">
-                                                    <i class="bi bi-star-fill"></i>
-                                                </span>
-                                            </h3>
-                                            <p class="fs-7">The subject goes here</p>
-                                            <p class="fs-7 text-secondary">
-                                                <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <!--end::Message-->
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                            </div>
-                        </li>
-                        <!--end::Messages Dropdown Menu-->
-
-                        <!--begin::Notifications Dropdown Menu-->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                                <i class="bi bi-bell-fill"></i>
-                                <span class="navbar-badge badge text-bg-warning">15</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-envelope me-2"></i> 4 new messages
-                                    <span class="float-end text-secondary fs-7">3 mins</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                                    <span class="float-end text-secondary fs-7">12 hours</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item">
-                                    <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                                    <span class="float-end text-secondary fs-7">2 days</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
-                            </div>
-                        </li>
-                        <!--end::Notifications Dropdown Menu-->
-
-                        <!--begin::Fullscreen Toggle-->
+                        {{-- Email Icon --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                                <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                                <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+                            <a class="nav-link text-primary px-2" href="mailto:{{ config('services.contact.email', auth()->user()->email ?? 'admin@school.com') }}" title="Email: {{ config('services.contact.email', 'admin@school.com') }}">
+                                <i class="bi bi-envelope-fill fs-5"></i>
                             </a>
                         </li>
-                        <!--end::Fullscreen Toggle-->
+
+                        {{-- Bell Icon (Shown ONLY when any new admission or fee voucher is issued or updated) --}}
+                        @if(isset($notificationsCount) && $notificationsCount > 0)
+                            <li class="nav-item dropdown">
+                                <a class="nav-link px-2 text-warning position-relative" data-bs-toggle="dropdown" href="#" title="{{ $notificationsCount }} Updates: Admissions & Fee Vouchers">
+                                    <i class="bi bi-bell-fill fs-5"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                                        {{ $notificationsCount }}
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow border-0 py-0 mt-2">
+                                    <div class="dropdown-header bg-light fw-bold py-2 border-bottom d-flex justify-content-between align-items-center">
+                                        <span><i class="bi bi-bell-fill me-1 text-warning"></i> Updates ({{ $notificationsCount }})</span>
+                                        <span class="badge bg-danger-subtle text-danger small">Admissions & Fees</span>
+                                    </div>
+                                    <div style="max-height: 320px; overflow-y: auto;">
+                                        @foreach($systemNotifications as $notif)
+                                            <a href="{{ $notif['url'] }}" class="dropdown-item py-2 px-3 border-bottom d-flex align-items-start gap-2">
+                                                <i class="bi {{ $notif['icon'] }} {{ $notif['color'] }} fs-5 mt-1"></i>
+                                                <div class="flex-grow-1 text-wrap">
+                                                    <div class="fw-semibold text-dark small mb-0">{{ $notif['title'] }}</div>
+                                                    <div class="text-secondary" style="font-size: 11px;">{{ $notif['subtitle'] }}</div>
+                                                    <div class="text-muted" style="font-size: 10px;"><i class="bi bi-clock me-1"></i>{{ $notif['time'] }}</div>
+                                                </div>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                    <div class="p-2 bg-light text-center border-top">
+                                        <span class="small text-muted">Showing recent admissions & fee updates</span>
+                                    </div>
+                                </div>
+                            </li>
+                        @endif
 
                         <!--begin::User Menu Dropdown-->
-                        <li class="nav-item dropdown user-menu">
-                            @auth
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                    <img src="./assets/img/user2-160x160.jpg" class="user-image rounded-circle shadow"
-                                        alt="User Image" />
-                                    <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
+                        @auth
+                            <li class="nav-item dropdown user-menu ms-1">
+                                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center gap-2 py-1 px-2" data-bs-toggle="dropdown">
+                                    <img src="{{ auth()->user()->avatar_url }}" class="rounded-circle shadow-sm border object-fit-cover" alt="{{ auth()->user()->name }}" style="width: 34px; height: 34px;" />
+                                    <span class="d-none d-md-inline fw-semibold text-dark small">{{ auth()->user()->name }}</span>
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                                    <!--begin::User Image-->
-                                    <li class="user-header text-bg-primary">
-                                        <img src="./assets/img/user2-160x160.jpg" class="rounded-circle shadow"
-                                            alt="User Image" />
-
-                                        <p>
-                                            {{ auth()->user()->name }}
-                                        </p>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2 mt-2" style="min-width: 230px;">
+                                    <li class="px-3 py-2 text-center border-bottom mb-2">
+                                        <img src="{{ auth()->user()->avatar_url }}" class="rounded-circle shadow-sm border object-fit-cover mb-2" alt="{{ auth()->user()->name }}" style="width: 60px; height: 60px;" />
+                                        <div class="fw-bold text-dark">{{ auth()->user()->name }}</div>
+                                        <span class="badge bg-primary-subtle text-primary small text-uppercase">{{ auth()->user()->roles->pluck('name')->join(', ') ?: 'User' }}</span>
+                                        <div class="small text-muted text-truncate mt-1">{{ auth()->user()->email }}</div>
                                     </li>
-                            @endauth
-                                <!--end::User Image-->
-                                <!--begin::Menu Body-->
-                                <li class="user-body">
-                                    <!--begin::Row-->
-                                    <div class="row">
-                                        <div class="col-4 text-center">
-                                            <a href="#">Followers</a>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <a href="#">Sales</a>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <a href="#">Friends</a>
-                                        </div>
-                                    </div>
-                                    <!--end::Row-->
-                                </li>
-                                <!--end::Menu Body-->
-                                <!--begin::Menu Footer-->
-                                <li class="user-footer">
-                                    
-                                    <a class="btn btn-outline-secondary" href="{{ route('profile.edit') }}">
-                                        Profile
-                                    </a>
-                                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Logout
-                                        </button>
-                                    </form>
-                                </li>
-                                <!--end::Menu Footer-->
-                            </ul>
-                        </li>
+                                    <li>
+                                        <a class="dropdown-item rounded-2 py-2" href="{{ route('profile.edit') }}">
+                                            <i class="bi bi-person-gear me-2 text-primary"></i> Profile & Picture
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item rounded-2 py-2" href="{{ route('home') }}">
+                                            <i class="bi bi-speedometer2 me-2 text-info"></i> Dashboard
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider my-1"></li>
+                                    <li>
+                                        <form action="{{ route('logout') }}" method="POST" class="m-0">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item text-danger rounded-2 py-2">
+                                                <i class="bi bi-box-arrow-right me-2"></i> Sign Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endauth
                         <!--end::User Menu Dropdown-->
                     </ul>
                     <!--end::End Navbar Links-->

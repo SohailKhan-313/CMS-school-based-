@@ -146,31 +146,31 @@
                                     @endif
                                 </td>
                                 <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
-                                        {{-- 1-Click Complete Modal View --}}
-                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#viewStudentModal{{ $student->id }}" title="View Complete Student Modal">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </button>
-                                        {{-- Full page view --}}
-                                        <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-secondary" title="Full Page Profile">
-                                            <i class="bi bi-box-arrow-up-right"></i>
-                                        </a>
-                                        {{-- FPDF Print Slip --}}
-                                        <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Slip (FPDF)">
-                                            <i class="bi bi-printer-fill"></i>
-                                        </a>
-                                        {{-- Edit --}}
-                                        <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary" title="Edit Student">
-                                            <i class="bi bi-pencil-fill"></i>
-                                        </a>
-                                        {{-- Delete --}}
-                                        <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this student record?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger" title="Delete Student">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
-                                        </form>
+                                    <div class="d-flex justify-content-end align-items-center gap-1">
+                                         {{-- 1-Click Complete Modal View --}}
+                                         <button type="button" class="btn btn-sm btn-outline-info rounded-2" data-bs-toggle="modal" data-bs-target="#viewStudentModal{{ $student->id }}" title="View Complete Student Modal">
+                                             <i class="bi bi-eye-fill"></i>
+                                         </button>
+                                         {{-- Full page view --}}
+                                         <a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="Full Page Profile">
+                                             <i class="bi bi-box-arrow-up-right"></i>
+                                         </a>
+                                         {{-- FPDF Print Slip --}}
+                                         <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip (FPDF)">
+                                             <i class="bi bi-printer-fill"></i>
+                                         </a>
+                                         {{-- Edit --}}
+                                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Student">
+                                             <i class="bi bi-pencil-fill"></i>
+                                         </a>
+                                         {{-- Delete --}}
+                                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to delete this student record?');">
+                                             @csrf
+                                             @method('DELETE')
+                                             <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Delete Student">
+                                                 <i class="bi bi-trash-fill"></i>
+                                             </button>
+                                         </form>
                                     </div>
 
                                     <!-- ========================================== -->

@@ -22,10 +22,18 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => 'nullable|min:6|confirmed',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            }
+            $user->avatar = $request->file('avatar')->store('avatars', 'public');
+        }
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
@@ -34,6 +42,6 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect()->route('profile.edit')
-            ->with('success', 'Profile updated successfully.');
+            ->with('success', 'Profile and picture updated successfully.');
     }
 }

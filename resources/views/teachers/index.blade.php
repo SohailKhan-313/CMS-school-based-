@@ -126,28 +126,28 @@
                                     @endif
                                 </td>
                                 <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
+                                    <div class="d-flex justify-content-end align-items-center gap-1">
                                         {{-- 1-Click Complete Modal View --}}
-                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#viewTeacherModal{{ $teacher->id }}" title="View Complete Profile Modal">
+                                        <button type="button" class="btn btn-sm btn-outline-info rounded-2" data-bs-toggle="modal" data-bs-target="#viewTeacherModal{{ $teacher->id }}" title="View Complete Profile Modal">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
                                         {{-- Full page view --}}
-                                        <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-outline-secondary" title="Full Page Profile">
+                                        <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="Full Page Profile">
                                             <i class="bi bi-box-arrow-up-right"></i>
                                         </a>
                                         {{-- FPDF Print --}}
-                                        <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Profile Sheet (FPDF)">
+                                        <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Profile Sheet (FPDF)">
                                             <i class="bi bi-printer-fill"></i>
                                         </a>
                                         {{-- Edit --}}
-                                        <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary" title="Edit Teacher">
+                                        <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Teacher">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
                                         {{-- Delete --}}
-                                        <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to remove this faculty record?');">
+                                        <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to remove this faculty record?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger" title="Delete Teacher">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Delete Teacher">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>

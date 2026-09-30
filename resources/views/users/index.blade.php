@@ -44,18 +44,20 @@
                                 @endforeach
                             </td>
                             <td>
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary">
-                                    Edit
-                                </a>
+                                <div class="d-flex justify-content-center align-items-center gap-1">
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary rounded-2">
+                                        Edit
+                                    </a>
 
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete this user?')">
-                                        Delete
-                                    </button>
-                                </form>
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline m-0 p-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger rounded-2"
+                                            onclick="return confirm('Are you sure you want to delete this user?')">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

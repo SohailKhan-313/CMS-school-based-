@@ -303,3 +303,51 @@ test('students and faculty photo uploads and modal forms work seamlessly', funct
     expect($newTeacher->photo)->not->toBeNull();
     \Illuminate\Support\Facades\Storage::disk('public')->assertExists($newTeacher->photo);
 });
+
+test('user profile can upload avatar and navbar displays contact icons and conditional notifications', function () {
+    \Illuminate\Support\Facades\Storage::fake('public');
+
+    // 1. Profile edit page loads
+    $this->get(route('profile.edit'))->assertStatus(200)->assertSee('Profile Picture');
+
+    // 2. Upload avatar
+    $avatar = \Illuminate\Http\UploadedFile::fake()->image('profile_pic.png');
+    $response = $this->put(route('profile.update'), [
+        'name' => 'Updated Admin Name',
+        'email' => $this->admin->email,
+        'avatar' => $avatar,
+    ]);
+
+    $response->assertRedirect(route('profile.edit'));
+    $this->admin->refresh();
+    expect($this->admin->avatar)->not->toBeNull();
+    \Illuminate\Support\Facades\Storage::disk('public')->assertExists($this->admin->avatar);
+
+    // 3. Navbar rendering: WhatsApp, Email
+    $navResponse = $this->get(route('home'));
+    $navResponse->assertStatus(200);
+    $navResponse->assertSee('bi-whatsapp', false);
+    $navResponse->assertSee('bi-envelope-fill', false);
+    // 4. Notification bell is HIDDEN when there are no new admissions or vouchers
+    $navResponse->assertDontSee('bi-bell-fill', false);
+
+    // 5. Create a new student admission -> notification bell appears!
+    $class = SchoolClass::create([
+        'name' => 'Grade 1',
+        'section' => 'A',
+        'capacity' => 30,
+    ]);
+
+    Student::create([
+        'name' => 'Notification Test Student',
+        'admission_number' => 'ADM-NOTIF-001',
+        'roll_number' => '01A-01',
+        'school_class_id' => $class->id,
+        'status' => 'active',
+    ]);
+
+    $navResponseWithNotif = $this->get(route('home'));
+    $navResponseWithNotif->assertStatus(200);
+    $navResponseWithNotif->assertSee('bi-bell-fill', false);
+    $navResponseWithNotif->assertSee('ADM-NOTIF-001');
+});

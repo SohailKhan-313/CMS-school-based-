@@ -89,17 +89,17 @@
                                     </div>
                                 </td>
                                 <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('classes.show', $c->id) }}" class="btn btn-outline-info" title="View Students">
+                                    <div class="d-flex justify-content-end align-items-center gap-1">
+                                        <a href="{{ route('classes.show', $c->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Students">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a href="{{ route('classes.edit', $c->id) }}" class="btn btn-outline-primary" title="Edit Class">
+                                        <a href="{{ route('classes.edit', $c->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Class">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
-                                        <form action="{{ route('classes.destroy', $c->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Deleting this class will also affect enrolled students. Continue?');">
+                                        <form action="{{ route('classes.destroy', $c->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Deleting this class will also affect enrolled students. Continue?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger" title="Delete Class">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Delete Class">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>

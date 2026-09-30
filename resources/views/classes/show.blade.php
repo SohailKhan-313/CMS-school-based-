@@ -55,11 +55,11 @@
                                     </span>
                                 </td>
                                 <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Slip">
+                                    <div class="d-flex justify-content-end align-items-center gap-1">
+                                        <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip">
                                             <i class="bi bi-printer"></i>
                                         </a>
-                                        <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-info" title="View Profile">
+                                        <a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Profile">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </div>

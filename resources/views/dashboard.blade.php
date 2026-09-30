@@ -225,11 +225,11 @@
                                             <span class="badge bg-success-subtle text-success">Active</span>
                                         </td>
                                         <td class="text-end pe-3">
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="{{ route('students.slip', $s->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Slip (FPDF)">
+                                            <div class="d-flex justify-content-end align-items-center gap-1">
+                                                <a href="{{ route('students.slip', $s->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip (FPDF)">
                                                     <i class="bi bi-printer"></i>
                                                 </a>
-                                                <a href="{{ route('students.show', $s->id) }}" class="btn btn-outline-secondary" title="View Profile">
+                                                <a href="{{ route('students.show', $s->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="View Profile">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
                                             </div>
@@ -286,7 +286,7 @@
                                             @endif
                                         </td>
                                         <td class="text-end pe-3">
-                                            <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                                            <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Challan
                                             </a>
                                         </td>

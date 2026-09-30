@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'contact' => [
+        'whatsapp' => env('WHATSAPP_NUMBER', '+923000000000'),
+        'email' => env('SUPPORT_EMAIL', 'admin@school.com'),
+    ],
+
 ];

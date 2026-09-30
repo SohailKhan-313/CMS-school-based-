@@ -24,7 +24,25 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar',
     ];
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->avatar)) {
+            return asset('storage/'.$this->avatar);
+        }
+
+        if ($this->relationLoaded('teacher') && $this->teacher && $this->teacher->photo_url) {
+            return $this->teacher->photo_url;
+        }
+
+        if ($this->relationLoaded('student') && $this->student && $this->student->photo_url) {
+            return $this->student->photo_url;
+        }
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=4e73df&background=eef2ff&size=128';
+    }
 
     /**
      * The attributes that should be hidden for serialization.

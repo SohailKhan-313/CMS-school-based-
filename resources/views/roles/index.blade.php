@@ -39,18 +39,20 @@
                                 @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <div class="d-flex justify-content-center align-items-center gap-1">
+                                        <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-primary rounded-2">Edit</a>
 
-                                    <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
+                                        <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
+                                            class="d-inline m-0 p-0">
+                                            @csrf
+                                            @method('DELETE')
 
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Are you sure you want to delete this role?')">
-                                            Delete
-                                        </button>
-                                    </form>
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-2"
+                                                onclick="return confirm('Are you sure you want to delete this role?')">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

@@ -166,20 +166,20 @@
                                     @endif
                                 </td>
                                 <td class="text-end pe-3">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Fee Challan (FPDF)">
+                                    <div class="d-flex justify-content-end align-items-center gap-1">
+                                        <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Fee Challan (FPDF)">
                                             <i class="bi bi-file-earmark-pdf-fill"></i>
                                         </a>
-                                        <a href="{{ route('accountant.show', $inv->id) }}" class="btn btn-outline-info" title="View Details">
+                                        <a href="{{ route('accountant.show', $inv->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Details">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a href="{{ route('accountant.edit', $inv->id) }}" class="btn btn-outline-primary" title="Edit / Collect Fee">
+                                        <a href="{{ route('accountant.edit', $inv->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit / Collect Fee">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
-                                        <form action="{{ route('accountant.destroy', $inv->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this fee invoice record?');">
+                                        <form action="{{ route('accountant.destroy', $inv->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to delete this fee invoice record?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger" title="Delete Invoice">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Delete Invoice">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
