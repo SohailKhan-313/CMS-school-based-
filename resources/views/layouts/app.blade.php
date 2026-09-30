@@ -55,6 +55,37 @@
     <!-- jsvectormap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
+
+    <style>
+        /* Global Pagination Styling & SVG Arrow Constraints */
+        nav svg, .pagination svg {
+            width: 1rem !important;
+            height: 1rem !important;
+            max-width: 1rem !important;
+            max-height: 1rem !important;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .pagination {
+            margin-bottom: 0;
+            gap: 2px;
+        }
+        .pagination .page-item .page-link {
+            border-radius: 6px;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.875rem;
+            color: #495057;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <!--end::Head-->
 <!--begin::Body-->
