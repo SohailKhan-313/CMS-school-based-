@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">Record fee collections, issue student challans, and track outstanding balances.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print fee')
                 <a href="{{ route('accountant.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Fees Ledger PDF
                 </a>
+                @endcan
+                @can('create fee')
                 <button type="button" class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#createInvoiceModal">
                     <i class="bi bi-receipt-cutoff me-1"></i> Issue Fee Invoice
                 </button>
+                @endcan
             </div>
         </div>
     </div>
@@ -167,15 +171,22 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
+                                        @can('print fee')
                                         <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Fee Challan (FPDF)">
                                             <i class="bi bi-file-earmark-pdf-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('show accountant')
                                         <a href="{{ route('accountant.show', $inv->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Details">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('edit fee')
                                         <a href="{{ route('accountant.edit', $inv->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit / Collect Fee">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('delete fee')
                                         <form action="{{ route('accountant.destroy', $inv->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to delete this fee invoice record?');">
                                             @csrf
                                             @method('DELETE')
@@ -183,6 +194,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -206,6 +218,7 @@
     </div>
 </div>
 
+@can('create fee')
 <!-- ========================================== -->
 <!-- BOOTSTRAP MODAL: ISSUE FEE INVOICE         -->
 <!-- ========================================== -->
@@ -295,5 +308,6 @@
         </div>
     </div>
 </div>
+@endcan
 
 @endsection

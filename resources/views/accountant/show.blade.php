@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">{{ $invoice->invoice_number }} - {{ $invoice->title }}</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print fee')
                 <a href="{{ route('accountant.challan', $invoice->id) }}" target="_blank" class="btn btn-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Challan (FPDF)
                 </a>
+                @endcan
+                @can('edit fee')
                 <a href="{{ route('accountant.edit', $invoice->id) }}" class="btn btn-outline-primary me-2">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Invoice
                 </a>
+                @endcan
                 <a href="{{ route('accountant.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back
                 </a>
@@ -100,9 +104,11 @@
                     <div class="text-muted small">
                         Recorded by: {{ $invoice->creator ? $invoice->creator->name : 'System Accountant' }}
                     </div>
+                    @can('print fee')
                     <a href="{{ route('accountant.challan', $invoice->id) }}" target="_blank" class="btn btn-danger">
                         <i class="bi bi-printer-fill me-1"></i> Print Official Fee Challan (FPDF)
                     </a>
+                    @endcan
                 </div>
             </div>
         </div>

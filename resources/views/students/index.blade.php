@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">Manage enrolled students, photos, academic records, and printable profile slips.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print student')
                 <a href="{{ route('students.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
                 </a>
+                @endcan
+                @can('create student')
                 <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createStudentModal">
                     <i class="bi bi-person-plus-fill me-1"></i> Enroll New Student
                 </button>
+                @endcan
             </div>
         </div>
     </div>
@@ -147,6 +151,7 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
+                                         @can('show student')
                                          {{-- 1-Click Complete Modal View --}}
                                          <button type="button" class="btn btn-sm btn-outline-info rounded-2" data-bs-toggle="modal" data-bs-target="#viewStudentModal{{ $student->id }}" title="View Complete Student Modal">
                                              <i class="bi bi-eye-fill"></i>
@@ -155,14 +160,20 @@
                                          <a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="Full Page Profile">
                                              <i class="bi bi-box-arrow-up-right"></i>
                                          </a>
+                                         @endcan
+                                         @can('print student')
                                          {{-- FPDF Print Slip --}}
                                          <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip (FPDF)">
                                              <i class="bi bi-printer-fill"></i>
                                          </a>
+                                         @endcan
+                                         @can('edit student')
                                          {{-- Edit --}}
                                          <a href="{{ route('students.edit', $student->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Student">
                                              <i class="bi bi-pencil-fill"></i>
                                          </a>
+                                         @endcan
+                                         @can('delete student')
                                          {{-- Delete --}}
                                          <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to delete this student record?');">
                                              @csrf
@@ -171,6 +182,7 @@
                                                  <i class="bi bi-trash-fill"></i>
                                              </button>
                                          </form>
+                                         @endcan
                                     </div>
 
                                     <!-- ========================================== -->
@@ -258,12 +270,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer bg-light py-2">
+                                                    @can('print student')
                                                     <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-outline-danger btn-sm">
                                                         <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Slip (FPDF)
                                                     </a>
+                                                    @endcan
+                                                    @can('edit student')
                                                     <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary btn-sm">
                                                         <i class="bi bi-pencil-fill me-1"></i> Edit Student
                                                     </a>
+                                                    @endcan
                                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
@@ -292,6 +308,7 @@
     </div>
 </div>
 
+@can('create student')
 <!-- ========================================== -->
 <!-- BOOTSTRAP MODAL: ENROLL NEW STUDENT       -->
 <!-- ========================================== -->
@@ -415,6 +432,7 @@
         </div>
     </div>
 </div>
+@endcan
 
 @push('scripts')
 <script>

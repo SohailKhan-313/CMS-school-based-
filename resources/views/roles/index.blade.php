@@ -8,7 +8,9 @@
 
         <div class="d-flex justify-content-between mb-4">
             <h4>All Roles</h4>
+            @can('create roles')
             <a href="{{ route('roles.create') }}" class="btn btn-primary">+ Add Role</a>
+            @endcan
         </div>
 
         {{-- Success Message --}}
@@ -40,8 +42,11 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center align-items-center gap-1">
+                                        @can('edit roles')
                                         <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-primary rounded-2">Edit</a>
+                                        @endcan
 
+                                        @can('delete roles')
                                         <form action="{{ route('roles.destroy', $role->id) }}" method="POST"
                                             class="d-inline m-0 p-0">
                                             @csrf
@@ -52,6 +57,7 @@
                                                 Delete
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

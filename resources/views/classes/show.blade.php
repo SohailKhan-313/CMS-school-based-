@@ -9,9 +9,11 @@
                 <p class="text-secondary small mb-0">Room: {{ $class->room_number ?? 'TBA' }} | Class Teacher: {{ $class->teacher ? $class->teacher->name : 'Unassigned' }}</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('create student')
                 <a href="{{ route('students.create') }}?school_class_id={{ $class->id }}" class="btn btn-primary me-2">
                     <i class="bi bi-person-plus-fill me-1"></i> Enroll Student in this Class
                 </a>
+                @endcan
                 <a href="{{ route('classes.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back
                 </a>
@@ -56,12 +58,16 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
+                                        @can('print student')
                                         <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip">
                                             <i class="bi bi-printer"></i>
                                         </a>
+                                        @endcan
+                                        @can('show student')
                                         <a href="{{ route('students.show', $student->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Profile">
                                             <i class="bi bi-eye"></i>
                                         </a>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

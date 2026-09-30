@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">{{ $teacher->name }} ({{ $teacher->employee_code }})</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print teacher')
                 <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Profile Sheet (FPDF)
                 </a>
+                @endcan
+                @can('edit teacher')
                 <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary me-2">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Profile
                 </a>
+                @endcan
                 <a href="{{ route('teachers.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back
                 </a>
@@ -106,9 +110,11 @@
                                         <td>{{ $c->capacity }}</td>
                                         <td><span class="badge bg-primary text-white">{{ $c->students->count() }} Students</span></td>
                                         <td class="text-end">
+                                            @can('show class')
                                             <a href="{{ route('classes.show', $c->id) }}" class="btn btn-sm btn-outline-info">
                                                 <i class="bi bi-eye"></i> Details
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

@@ -245,7 +245,9 @@
                             </li>
                         @endcan
 
-                        <li class="nav-header text-uppercase fs-7 text-secondary mt-2 px-3">System Access</li>
+                        @canany(['see roles', 'see permissions', 'see users'])
+                            <li class="nav-header text-uppercase fs-7 text-secondary mt-2 px-3">System Access</li>
+                        @endcanany
 
                         @can('see roles')
                             <li class="nav-item">

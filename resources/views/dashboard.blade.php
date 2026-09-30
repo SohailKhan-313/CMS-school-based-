@@ -12,19 +12,31 @@
                 <p class="text-secondary small mb-0">Live interconnected overview of students, faculty, classes, and financial accounting.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @canany(['print student', 'print teacher', 'print class', 'print fee', 'see users'])
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-file-earmark-pdf-fill me-1"></i> Quick PDF Reports
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                        @can('print student')
                         <li><a class="dropdown-item" href="{{ route('students.pdf') }}" target="_blank"><i class="bi bi-mortarboard me-2 text-primary"></i>Students Directory</a></li>
+                        @endcan
+                        @can('print teacher')
                         <li><a class="dropdown-item" href="{{ route('teachers.pdf') }}" target="_blank"><i class="bi bi-person-workspace me-2 text-success"></i>Faculty Directory</a></li>
+                        @endcan
+                        @can('print class')
                         <li><a class="dropdown-item" href="{{ route('classes.pdf') }}" target="_blank"><i class="bi bi-diagram-3 me-2 text-info"></i>Classes Roster</a></li>
+                        @endcan
+                        @can('print fee')
                         <li><a class="dropdown-item" href="{{ route('accountant.pdf') }}" target="_blank"><i class="bi bi-cash-stack me-2 text-warning"></i>Fee Ledger Statement</a></li>
+                        @endcan
+                        @can('see users')
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{{ route('admin.users.pdf') }}" target="_blank"><i class="bi bi-people me-2 text-secondary"></i>Users & Roles Summary</a></li>
+                        @endcan
                     </ul>
                 </div>
+                @endcanany
             </div>
         </div>
     </div>
@@ -193,9 +205,11 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-mortarboard text-primary me-2"></i>Recent Student Admissions</h5>
+                        @can('create student')
                         <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary">
                             <i class="bi bi-plus-lg me-1"></i> Enroll Student
                         </a>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -226,12 +240,16 @@
                                         </td>
                                         <td class="text-end pe-3">
                                             <div class="d-flex justify-content-end align-items-center gap-1">
+                                                @can('print student')
                                                 <a href="{{ route('students.slip', $s->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip (FPDF)">
                                                     <i class="bi bi-printer"></i>
                                                 </a>
+                                                @endcan
+                                                @can('show student')
                                                 <a href="{{ route('students.show', $s->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="View Profile">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>
@@ -247,9 +265,11 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-cash-stack text-success me-2"></i>Recent Fee Invoices</h5>
+                        @can('create fee')
                         <a href="{{ route('accountant.create') }}" class="btn btn-sm btn-success">
                             <i class="bi bi-plus-lg me-1"></i> Issue Invoice
                         </a>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -286,9 +306,11 @@
                                             @endif
                                         </td>
                                         <td class="text-end pe-3">
+                                            @can('print fee')
                                             <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Challan
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">Manage teaching staff, photos, departmental specializations, and faculty sheets.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print teacher')
                 <a href="{{ route('teachers.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
                 </a>
+                @endcan
+                @can('create teacher')
                 <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createTeacherModal">
                     <i class="bi bi-person-plus-fill me-1"></i> Add Faculty Member
                 </button>
+                @endcan
             </div>
         </div>
     </div>
@@ -127,6 +131,7 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
+                                        @can('show teacher')
                                         {{-- 1-Click Complete Modal View --}}
                                         <button type="button" class="btn btn-sm btn-outline-info rounded-2" data-bs-toggle="modal" data-bs-target="#viewTeacherModal{{ $teacher->id }}" title="View Complete Profile Modal">
                                             <i class="bi bi-eye-fill"></i>
@@ -135,14 +140,20 @@
                                         <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="Full Page Profile">
                                             <i class="bi bi-box-arrow-up-right"></i>
                                         </a>
+                                        @endcan
+                                        @can('print teacher')
                                         {{-- FPDF Print --}}
                                         <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Profile Sheet (FPDF)">
                                             <i class="bi bi-printer-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('edit teacher')
                                         {{-- Edit --}}
                                         <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Teacher">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('delete teacher')
                                         {{-- Delete --}}
                                         <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Are you sure you want to remove this faculty record?');">
                                             @csrf
@@ -151,6 +162,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
 
                                     <!-- ========================================== -->
@@ -255,12 +267,16 @@
                                                     @endif
                                                 </div>
                                                 <div class="modal-footer bg-light py-2">
+                                                    @can('print teacher')
                                                     <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-outline-danger btn-sm">
                                                         <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Sheet (FPDF)
                                                     </a>
+                                                    @endcan
+                                                    @can('edit teacher')
                                                     <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary btn-sm">
                                                         <i class="bi bi-pencil-fill me-1"></i> Edit Record
                                                     </a>
+                                                    @endcan
                                                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
@@ -289,6 +305,7 @@
     </div>
 </div>
 
+@can('create teacher')
 <!-- ========================================== -->
 <!-- BOOTSTRAP MODAL: ADD FACULTY MEMBER        -->
 <!-- ========================================== -->
@@ -386,6 +403,7 @@
         </div>
     </div>
 </div>
+@endcan
 
 @push('scripts')
 <script>

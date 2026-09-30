@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">Manage grade levels, sections, assigned class teachers, and room capacities.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print class')
                 <a href="{{ route('classes.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Classes PDF
                 </a>
+                @endcan
+                @can('create class')
                 <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createClassModal">
                     <i class="bi bi-plus-lg me-1"></i> Add New Class
                 </button>
+                @endcan
             </div>
         </div>
     </div>
@@ -90,12 +94,17 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
+                                        @can('show class')
                                         <a href="{{ route('classes.show', $c->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Students">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('edit class')
                                         <a href="{{ route('classes.edit', $c->id) }}" class="btn btn-sm btn-outline-primary rounded-2" title="Edit Class">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
+                                        @endcan
+                                        @can('delete class')
                                         <form action="{{ route('classes.destroy', $c->id) }}" method="POST" class="d-inline m-0 p-0" onsubmit="return confirm('Deleting this class will also affect enrolled students. Continue?');">
                                             @csrf
                                             @method('DELETE')
@@ -103,6 +112,7 @@
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
                                         </form>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -126,6 +136,7 @@
     </div>
 </div>
 
+@can('create class')
 <!-- ========================================== -->
 <!-- BOOTSTRAP MODAL: ADD NEW CLASS             -->
 <!-- ========================================== -->
@@ -182,5 +193,6 @@
         </div>
     </div>
 </div>
+@endcan
 
 @endsection

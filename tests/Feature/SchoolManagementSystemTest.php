@@ -11,7 +11,23 @@ use Spatie\Permission\Models\Role;
 uses(RefreshDatabase::class);
 
 beforeEach(function () {
+    $permissions = [
+        'show student', 'create student', 'edit student', 'delete student', 'print student',
+        'show teacher', 'create teacher', 'edit teacher', 'delete teacher', 'print teacher',
+        'show accountant', 'create fee', 'edit fee', 'delete fee', 'print fee',
+        'show class', 'create class', 'edit class', 'delete class', 'print class',
+        'show admin',
+        'see roles', 'create roles', 'edit roles', 'delete roles',
+        'see permissions', 'create permissions', 'edit permissions', 'delete permissions',
+        'see users', 'create users', 'edit users', 'delete users',
+    ];
+    foreach ($permissions as $perm) {
+        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => $perm, 'guard_name' => 'web']);
+    }
+
     $this->adminRole = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+    $this->adminRole->syncPermissions(\Spatie\Permission\Models\Permission::all());
+
     $this->admin = User::firstOrCreate(
         ['email' => 'admin_test@school.com'],
         ['name' => 'Admin Tester', 'password' => bcrypt('password')]
@@ -350,4 +366,71 @@ test('user profile can upload avatar and navbar displays contact icons and condi
     $navResponseWithNotif->assertStatus(200);
     $navResponseWithNotif->assertSee('bi-bell-fill', false);
     $navResponseWithNotif->assertSee('ADM-NOTIF-001');
+});
+
+test('roles with only view and file permissions do not see irrelevant action buttons and forms', function () {
+    // Seed required permissions
+    $permissions = [
+        'show student', 'create student', 'edit student', 'delete student', 'print student',
+        'show teacher', 'print teacher',
+        'show class', 'print class',
+    ];
+    foreach ($permissions as $perm) {
+        \Spatie\Permission\Models\Permission::firstOrCreate(['name' => $perm, 'guard_name' => 'web']);
+    }
+
+    $teacherRole = Role::firstOrCreate(['name' => 'teacher', 'guard_name' => 'web']);
+    $teacherRole->syncPermissions([
+        'show student', 'print student',
+        'show teacher', 'print teacher',
+        'show class', 'print class',
+    ]);
+
+    $teacherUser = User::firstOrCreate(
+        ['email' => 'viewer_teacher@school.com'],
+        ['name' => 'Viewer Teacher', 'password' => bcrypt('password')]
+    );
+    $teacherUser->syncRoles([$teacherRole]);
+
+    $class = SchoolClass::create([
+        'name' => 'Grade 10',
+        'section' => 'B',
+        'capacity' => 25,
+    ]);
+
+    $student = Student::create([
+        'name' => 'Alice Viewer Test',
+        'admission_number' => 'ADM-VIEW-001',
+        'roll_number' => '10B-01',
+        'school_class_id' => $class->id,
+        'status' => 'active',
+    ]);
+
+    // Act as the user with only show/print permissions
+    $this->actingAs($teacherUser);
+
+    $response = $this->get(route('students.index'));
+    $response->assertStatus(200);
+
+    // Should see authorized elements:
+    $response->assertSee('Alice Viewer Test');
+    $response->assertSee('Print PDF Directory');
+    $response->assertSee('View Complete Student Modal');
+    $response->assertSee('Print Slip (FPDF)');
+
+    // Should NOT see unauthorized buttons or forms:
+    $response->assertDontSee('Enroll New Student');
+    $response->assertDontSee('createStudentModal');
+    $response->assertDontSee('title="Edit Student"', false);
+    $response->assertDontSee('title="Delete Student"', false);
+    $response->assertDontSee('System Access');
+    $response->assertDontSee('Admin Center');
+    $response->assertDontSee('Fees &amp; Accounts');
+
+    // Also check student show page
+    $showResponse = $this->get(route('students.show', $student->id));
+    $showResponse->assertStatus(200);
+    $showResponse->assertSee('Print Official Slip (FPDF)');
+    $showResponse->assertDontSee('Edit Profile');
+    $showResponse->assertDontSee('Issue Fee Voucher');
 });

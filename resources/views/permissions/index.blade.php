@@ -6,7 +6,9 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between mb-4">
         <h4>All Permissions</h4>
+        @can('create permissions')
         <a href="{{ route('permissions.create') }}" class="btn btn-primary">+ Add Permission</a>
+        @endcan
     </div>
 
     @if(session('success'))
@@ -30,7 +32,10 @@
                             <td>{{ $permission->name }}</td>
                             <td>
                                 <div class="d-flex justify-content-start align-items-center gap-1">
+                                    @can('edit permissions')
                                     <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-primary rounded-2">Edit</a>
+                                    @endcan
+                                    @can('delete permissions')
                                     <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" class="d-inline m-0 p-0">
                                         @csrf
                                         @method('DELETE')
@@ -39,6 +44,7 @@
                                             Delete
                                         </button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

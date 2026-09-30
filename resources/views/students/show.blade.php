@@ -9,12 +9,16 @@
                 <p class="text-secondary small mb-0">{{ $student->name }} ({{ $student->admission_number }})</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                @can('print student')
                 <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-danger me-2">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Slip (FPDF)
                 </a>
+                @endcan
+                @can('edit student')
                 <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary me-2">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Profile
                 </a>
+                @endcan
                 <a href="{{ route('students.index') }}" class="btn btn-outline-secondary">
                     <i class="bi bi-arrow-left me-1"></i> Back
                 </a>
@@ -130,9 +134,11 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-cash-stack text-success me-2"></i>Fee Invoices & Statements</h5>
+                        @can('create fee')
                         <a href="{{ route('accountant.create') }}?student_id={{ $student->id }}" class="btn btn-sm btn-outline-primary">
                             <i class="bi bi-plus-lg me-1"></i> Issue New Invoice
                         </a>
+                        @endcan
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -165,9 +171,11 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
+                                            @can('print fee')
                                             <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger" title="Print Fee Challan">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Challan
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

@@ -6,10 +6,14 @@
     <div class="d-flex justify-content-between mb-4">
         <h2 class="fw-bold fs-4">Users List</h2>
         <div class="d-flex gap-2">
+            @can('see users')
             <a href="{{ route('admin.users.pdf') }}" target="_blank" class="btn btn-outline-danger">
                 <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
             </a>
+            @endcan
+            @can('create users')
             <a href="{{ route('users.create') }}" class="btn btn-primary">+ Add User</a>
+            @endcan
         </div>
     </div>
 
@@ -45,10 +49,13 @@
                             </td>
                             <td>
                                 <div class="d-flex justify-content-center align-items-center gap-1">
+                                    @can('edit users')
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary rounded-2">
                                         Edit
                                     </a>
+                                    @endcan
 
+                                    @can('delete users')
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline m-0 p-0">
                                         @csrf
                                         @method('DELETE')
@@ -57,6 +64,7 @@
                                             Delete
                                         </button>
                                     </form>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
