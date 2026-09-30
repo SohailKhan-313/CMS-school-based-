@@ -130,17 +130,17 @@
 <!-- BOOTSTRAP MODAL: ADD NEW CLASS             -->
 <!-- ========================================== -->
 <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-scrollable my-3">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-bold" id="createClassModalLabel">
-                    <i class="bi bi-plus-circle me-2"></i>Create New Class & Section
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('classes.store') }}" method="POST">
+            <form action="{{ route('classes.store') }}" method="POST" class="d-flex flex-column" style="min-height: 0;">
                 @csrf
-                <div class="modal-body p-4">
+                <div class="modal-header bg-primary text-white py-3">
+                    <h5 class="modal-title fw-bold" id="createClassModalLabel">
+                        <i class="bi bi-plus-circle me-2"></i>Create New Class & Section
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Class Name <span class="text-danger">*</span></label>
                         <input type="text" name="name" class="form-control" placeholder="e.g. Grade 10 or Class 9" required>

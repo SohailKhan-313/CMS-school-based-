@@ -127,15 +127,23 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="btn-group btn-group-sm">
+                                        {{-- 1-Click Complete Modal View --}}
+                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#viewTeacherModal{{ $teacher->id }}" title="View Complete Profile Modal">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </button>
+                                        {{-- Full page view --}}
+                                        <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-outline-secondary" title="Full Page Profile">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                        {{-- FPDF Print --}}
                                         <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Profile Sheet (FPDF)">
                                             <i class="bi bi-printer-fill"></i>
                                         </a>
-                                        <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-outline-info" title="View Profile">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
+                                        {{-- Edit --}}
                                         <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary" title="Edit Teacher">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
+                                        {{-- Delete --}}
                                         <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to remove this faculty record?');">
                                             @csrf
                                             @method('DELETE')
@@ -144,6 +152,121 @@
                                             </button>
                                         </form>
                                     </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- BOOTSTRAP MODAL: VIEW TEACHER PROFILE      -->
+                                    <!-- ========================================== -->
+                                    <div class="modal fade text-start" id="viewTeacherModal{{ $teacher->id }}" tabindex="-1" aria-labelledby="viewTeacherModalLabel{{ $teacher->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dialog-scrollable my-3">
+                                            <div class="modal-content border-0 shadow-lg">
+                                                <div class="modal-header bg-dark text-white py-3">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <i class="bi bi-person-badge-fill text-warning fs-5"></i>
+                                                        <h5 class="modal-title fw-bold mb-0" id="viewTeacherModalLabel{{ $teacher->id }}">
+                                                            Faculty Profile &bull; {{ $teacher->name }}
+                                                        </h5>
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
+                                                    <div class="row g-4 align-items-center mb-4 pb-3 border-bottom">
+                                                        <div class="col-auto text-center">
+                                                            @if($teacher->photo_url)
+                                                                <img src="{{ $teacher->photo_url }}" alt="{{ $teacher->name }}" class="rounded-circle object-fit-cover shadow border border-3 border-success" style="width: 90px; height: 90px;">
+                                                            @else
+                                                                <div class="rounded-circle bg-success-subtle text-success fw-bold d-flex align-items-center justify-content-center shadow" style="width: 90px; height: 90px; font-size: 32px;">
+                                                                    {{ strtoupper(substr($teacher->name, 0, 2)) }}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                                <h4 class="fw-bold text-dark mb-0">{{ $teacher->name }}</h4>
+                                                                @if($teacher->status === 'active')
+                                                                    <span class="badge bg-success-subtle text-success">Active</span>
+                                                                @elseif($teacher->status === 'on_leave')
+                                                                    <span class="badge bg-warning-subtle text-warning">On Leave</span>
+                                                                @else
+                                                                    <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                                                                @endif
+                                                            </div>
+                                                            <p class="text-secondary mb-1"><strong>Code:</strong> <code>{{ $teacher->employee_code }}</code> | <strong>Department:</strong> {{ $teacher->specialization ?? 'General' }}</p>
+                                                            <p class="small text-muted mb-0"><i class="bi bi-envelope me-1"></i>{{ $teacher->email }} &bull; <i class="bi bi-telephone me-1"></i>{{ $teacher->phone ?? 'N/A' }}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row g-3 mb-4">
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Highest Qualification</span>
+                                                                <span class="fw-semibold text-dark">{{ $teacher->qualification ?? 'Not Specified' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Date of Joining</span>
+                                                                <span class="fw-semibold text-dark">{{ $teacher->joining_date ? $teacher->joining_date->format('d M Y') : 'N/A' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Monthly Salary</span>
+                                                                <span class="fw-bold text-success">${{ number_format((float) $teacher->salary, 2) }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Campus / Residence Address</span>
+                                                                <span class="fw-semibold text-dark">{{ $teacher->address ?? 'Main Campus' }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
+                                                        <i class="bi bi-diagram-3-fill text-primary me-2"></i>Assigned Classes as Class Teacher
+                                                    </h6>
+                                                    @if($teacher->schoolClasses->count() > 0)
+                                                        <div class="table-responsive">
+                                                            <table class="table table-sm table-bordered align-middle">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th>Class</th>
+                                                                        <th>Section</th>
+                                                                        <th>Room</th>
+                                                                        <th>Enrolled Students</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($teacher->schoolClasses as $cls)
+                                                                        <tr>
+                                                                            <td class="fw-bold text-primary">{{ $cls->name }}</td>
+                                                                            <td><span class="badge bg-secondary-subtle text-secondary">{{ $cls->section }}</span></td>
+                                                                            <td>{{ $cls->room_number ?? 'N/A' }}</td>
+                                                                            <td>{{ $cls->students ? $cls->students->count() : 0 }} students</td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    @else
+                                                        <div class="alert alert-light text-muted border py-2 mb-0 small">
+                                                            <i class="bi bi-info-circle me-1"></i> No classes are currently assigned to this faculty member.
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                                <div class="modal-footer bg-light py-2">
+                                                    <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-outline-danger btn-sm">
+                                                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Sheet (FPDF)
+                                                    </a>
+                                                    <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary btn-sm">
+                                                        <i class="bi bi-pencil-fill me-1"></i> Edit Record
+                                                    </a>
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </td>
                             </tr>
                         @empty
@@ -170,17 +293,18 @@
 <!-- BOOTSTRAP MODAL: ADD FACULTY MEMBER        -->
 <!-- ========================================== -->
 <div class="modal fade" id="createTeacherModal" tabindex="-1" aria-labelledby="createTeacherModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable my-3">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title fw-bold" id="createTeacherModalLabel">
-                    <i class="bi bi-person-plus-fill me-2"></i>Add Faculty Member
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-column" style="min-height: 0;">
                 @csrf
-                <div class="modal-body p-4">
+                <div class="modal-header bg-success text-white py-3">
+                    <h5 class="modal-title fw-bold" id="createTeacherModalLabel">
+                        <i class="bi bi-person-plus-fill me-2"></i>Add Faculty Member
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                     
                     {{-- Faculty Photo Upload Header --}}
                     <div class="card mb-4 bg-light border-0">
@@ -251,7 +375,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer bg-light">
+
+                <div class="modal-footer bg-light py-2">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-success px-4 fw-semibold">
                         <i class="bi bi-check-circle-fill me-1"></i> Save Faculty Member

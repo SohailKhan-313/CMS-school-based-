@@ -147,15 +147,23 @@
                                 </td>
                                 <td class="text-end pe-3">
                                     <div class="btn-group btn-group-sm">
+                                        {{-- 1-Click Complete Modal View --}}
+                                        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#viewStudentModal{{ $student->id }}" title="View Complete Student Modal">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </button>
+                                        {{-- Full page view --}}
+                                        <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-secondary" title="Full Page Profile">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                        {{-- FPDF Print Slip --}}
                                         <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-outline-danger" title="Print Slip (FPDF)">
                                             <i class="bi bi-printer-fill"></i>
                                         </a>
-                                        <a href="{{ route('students.show', $student->id) }}" class="btn btn-outline-info" title="View Profile">
-                                            <i class="bi bi-eye-fill"></i>
-                                        </a>
+                                        {{-- Edit --}}
                                         <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary" title="Edit Student">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
+                                        {{-- Delete --}}
                                         <form action="{{ route('students.destroy', $student->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this student record?');">
                                             @csrf
                                             @method('DELETE')
@@ -164,6 +172,104 @@
                                             </button>
                                         </form>
                                     </div>
+
+                                    <!-- ========================================== -->
+                                    <!-- BOOTSTRAP MODAL: VIEW STUDENT PROFILE      -->
+                                    <!-- ========================================== -->
+                                    <div class="modal fade text-start" id="viewStudentModal{{ $student->id }}" tabindex="-1" aria-labelledby="viewStudentModalLabel{{ $student->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-dialog-scrollable my-3">
+                                            <div class="modal-content border-0 shadow-lg">
+                                                <div class="modal-header bg-dark text-white py-3">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <i class="bi bi-mortarboard-fill text-primary fs-5"></i>
+                                                        <h5 class="modal-title fw-bold mb-0" id="viewStudentModalLabel{{ $student->id }}">
+                                                            Student Dossier &bull; {{ $student->name }}
+                                                        </h5>
+                                                    </div>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
+                                                    <div class="row g-4 align-items-center mb-4 pb-3 border-bottom">
+                                                        <div class="col-auto text-center">
+                                                            @if($student->photo_url)
+                                                                <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle object-fit-cover shadow border border-3 border-primary" style="width: 90px; height: 90px;">
+                                                            @else
+                                                                <div class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center shadow" style="width: 90px; height: 90px; font-size: 32px;">
+                                                                    {{ strtoupper(substr($student->name, 0, 2)) }}
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="d-flex align-items-center gap-2 mb-1">
+                                                                <h4 class="fw-bold text-dark mb-0">{{ $student->name }}</h4>
+                                                                @if($student->status === 'active')
+                                                                    <span class="badge bg-success-subtle text-success">Active Enrolled</span>
+                                                                @elseif($student->status === 'inactive')
+                                                                    <span class="badge bg-danger-subtle text-danger">Inactive</span>
+                                                                @else
+                                                                    <span class="badge bg-warning-subtle text-warning">Graduated</span>
+                                                                @endif
+                                                            </div>
+                                                            <p class="text-secondary mb-1">
+                                                                <strong>Admission #:</strong> <code>{{ $student->admission_number }}</code> &bull; 
+                                                                <strong>Roll #:</strong> {{ $student->roll_number }} &bull; 
+                                                                <strong>Class:</strong> {{ $student->schoolClass ? $student->schoolClass->full_name : 'N/A' }}
+                                                            </p>
+                                                            <p class="small text-muted mb-0"><i class="bi bi-envelope me-1"></i>{{ $student->email ?? 'No email' }} &bull; <i class="bi bi-telephone me-1"></i>{{ $student->phone ?? 'No phone' }}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row g-3 mb-4">
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Gender</span>
+                                                                <span class="fw-semibold text-dark">{{ ucfirst($student->gender ?? 'N/A') }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Date of Birth</span>
+                                                                <span class="fw-semibold text-dark">{{ $student->date_of_birth ? $student->date_of_birth->format('d M Y') : 'N/A' }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Guardian Information</span>
+                                                                <span class="fw-semibold text-dark">{{ $student->guardian_name ?? 'N/A' }} ({{ $student->guardian_relation ?? 'Guardian' }})</span>
+                                                                <div class="small text-muted">{{ $student->guardian_phone ?? '' }}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Fee Balance</span>
+                                                                @if($student->dueFees() > 0)
+                                                                    <span class="fw-bold text-danger">${{ number_format($student->dueFees(), 2) }} Outstanding</span>
+                                                                @else
+                                                                    <span class="fw-bold text-success"><i class="bi bi-check-circle-fill me-1"></i>All Cleared ($0 Due)</span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <div class="p-3 bg-light rounded-3">
+                                                                <span class="text-muted small d-block">Residential Address</span>
+                                                                <span class="fw-semibold text-dark">{{ $student->address ?? 'No address provided' }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer bg-light py-2">
+                                                    <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-outline-danger btn-sm">
+                                                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Slip (FPDF)
+                                                    </a>
+                                                    <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary btn-sm">
+                                                        <i class="bi bi-pencil-fill me-1"></i> Edit Student
+                                                    </a>
+                                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </td>
                             </tr>
                         @empty
@@ -190,17 +296,18 @@
 <!-- BOOTSTRAP MODAL: ENROLL NEW STUDENT       -->
 <!-- ========================================== -->
 <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable my-3">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-bold" id="createStudentModalLabel">
-                    <i class="bi bi-person-plus-fill me-2"></i>Enroll New Student
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-column" style="min-height: 0;">
                 @csrf
-                <div class="modal-body p-4">
+                <div class="modal-header bg-primary text-white py-3">
+                    <h5 class="modal-title fw-bold" id="createStudentModalLabel">
+                        <i class="bi bi-person-plus-fill me-2"></i>Enroll New Student
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                     
                     {{-- Student Photo Upload Header --}}
                     <div class="card mb-4 bg-light border-0">
@@ -297,7 +404,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer bg-light">
+
+                <div class="modal-footer bg-light py-2">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary px-4 fw-semibold">
                         <i class="bi bi-check-circle-fill me-1"></i> Save & Enroll Student

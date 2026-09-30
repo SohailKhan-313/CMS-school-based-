@@ -210,17 +210,17 @@
 <!-- BOOTSTRAP MODAL: ISSUE FEE INVOICE         -->
 <!-- ========================================== -->
 <div class="modal fade" id="createInvoiceModal" tabindex="-1" aria-labelledby="createInvoiceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable my-3">
         <div class="modal-content border-0 shadow-lg">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title fw-bold" id="createInvoiceModalLabel">
-                    <i class="bi bi-receipt-cutoff me-2"></i>Issue New Fee Invoice / Challan
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('accountant.store') }}" method="POST">
+            <form action="{{ route('accountant.store') }}" method="POST" class="d-flex flex-column" style="min-height: 0;">
                 @csrf
-                <div class="modal-body p-4">
+                <div class="modal-header bg-success text-white py-3">
+                    <h5 class="modal-title fw-bold" id="createInvoiceModalLabel">
+                        <i class="bi bi-receipt-cutoff me-2"></i>Issue New Fee Invoice / Challan
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                     <div class="row g-3">
                         <div class="col-md-7">
                             <label class="form-label fw-semibold">Select Student <span class="text-danger">*</span></label>
