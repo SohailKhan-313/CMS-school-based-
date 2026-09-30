@@ -227,7 +227,7 @@ class PdfReportService extends FPDF
         $this->SetTextColor(24, 43, 73);
         $this->Cell(0, 8, 'Financial & Fee Invoices History', 0, 1, 'L');
 
-        $headers = ['Invoice #', 'Fee Title', 'Total ($)', 'Paid ($)', 'Balance ($)', 'Due Date', 'Status'];
+        $headers = ['Invoice #', 'Fee Title', 'Total', 'Paid', 'Balance', 'Due Date', 'Status'];
         $widths = [30,         55,          22,          22,         22,            24,         15];
         $aligns = ['C',        'L',         'R',         'R',        'R',           'C',        'C'];
 
@@ -365,7 +365,7 @@ class PdfReportService extends FPDF
         $fields = [
             ['Email Address:', $teacher->email, 'Phone Number:', $teacher->phone ?? 'N/A'],
             ['Qualification:', $teacher->qualification ?? 'N/A', 'Specialization:', $teacher->specialization ?? 'N/A'],
-            ['Joining Date:', $teacher->joining_date ? $teacher->joining_date->format('d M Y') : 'N/A', 'Monthly Salary:', '$'.number_format((float) $teacher->salary, 2)],
+            ['Joining Date:', $teacher->joining_date ? $teacher->joining_date->format('d M Y') : 'N/A', 'Monthly Salary:', number_format((float) $teacher->salary, 2)],
             ['Office Address:', $teacher->address ?? 'Main Campus', 'System User Account:', $teacher->user ? $teacher->user->email : 'Not Linked'],
         ];
 
@@ -434,7 +434,7 @@ class PdfReportService extends FPDF
         $this->setReportMeta('Fees & Accounts Statement', 'Total: '.$invoices->count().' Invoices');
         $this->AddPage('L');
 
-        $headers = ['#', 'Invoice #', 'Student Name', 'Class', 'Fee Title', 'Total ($)', 'Paid ($)', 'Balance ($)', 'Due Date', 'Status'];
+        $headers = ['#', 'Invoice #', 'Student Name', 'Class', 'Fee Title', 'Total', 'Paid', 'Balance', 'Due Date', 'Status'];
         $widths = [10,  28,          50,             25,      50,          22,          22,         22,            25,         26];
         $aligns = ['C', 'C',         'L',            'L',     'L',         'R',         'R',        'R',           'C',        'C'];
 
@@ -480,9 +480,9 @@ class PdfReportService extends FPDF
         $this->SetFillColor(230, 235, 245);
         $this->SetTextColor(24, 43, 73);
         $this->Cell(163, 8, ' GRAND TOTALS: ', 1, 0, 'R', true);
-        $this->Cell(22, 8, '$'.number_format($totalSum, 2), 1, 0, 'R', true);
-        $this->Cell(22, 8, '$'.number_format($paidSum, 2), 1, 0, 'R', true);
-        $this->Cell(22, 8, '$'.number_format(max(0, $totalSum - $paidSum), 2), 1, 0, 'R', true);
+        $this->Cell(22, 8, number_format($totalSum, 2), 1, 0, 'R', true);
+        $this->Cell(22, 8, number_format($paidSum, 2), 1, 0, 'R', true);
+        $this->Cell(22, 8, number_format(max(0, $totalSum - $paidSum), 2), 1, 0, 'R', true);
         $this->Cell(51, 8, '', 1, 1, 'C', true);
     }
 
@@ -540,7 +540,7 @@ class PdfReportService extends FPDF
 
         // Breakdown Table
         $this->SetX(15);
-        $headers = ['Item Description', 'Fee Category', 'Amount ($)'];
+        $headers = ['Item Description', 'Fee Category', 'Amount'];
         $widths = [100,                45,             35];
         $aligns = ['L',                 'C',            'R'];
 
@@ -564,17 +564,17 @@ class PdfReportService extends FPDF
         $this->SetFont('Arial', 'B', 9);
         $this->SetFillColor(245, 247, 250);
         $this->Cell(145, 7, ' Total Billed: ', 1, 0, 'R', true);
-        $this->Cell(35, 7, '$'.number_format((float) $invoice->total_amount, 2).' ', 1, 1, 'R', true);
+        $this->Cell(35, 7, number_format((float) $invoice->total_amount, 2).' ', 1, 1, 'R', true);
 
         $this->SetX(15);
         $this->SetTextColor(22, 101, 52);
         $this->Cell(145, 7, ' Total Paid: ', 1, 0, 'R', true);
-        $this->Cell(35, 7, '$'.number_format((float) $invoice->paid_amount, 2).' ', 1, 1, 'R', true);
+        $this->Cell(35, 7, number_format((float) $invoice->paid_amount, 2).' ', 1, 1, 'R', true);
 
         $this->SetX(15);
         $this->SetTextColor($invoice->balance > 0 ? 153 : 22, $invoice->balance > 0 ? 27 : 101, $invoice->balance > 0 ? 27 : 52);
         $this->Cell(145, 7, ' Net Outstanding Balance: ', 1, 0, 'R', true);
-        $this->Cell(35, 7, '$'.number_format((float) $invoice->balance, 2).' ', 1, 1, 'R', true);
+        $this->Cell(35, 7, number_format((float) $invoice->balance, 2).' ', 1, 1, 'R', true);
 
         $this->SetY($this->GetY() + 8);
         $this->SetX(15);

@@ -32,7 +32,7 @@
                             @error('employee_code') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Monthly Salary ($)</label>
+                            <label class="form-label fw-semibold">Monthly Salary</label>
                             <input type="number" step="0.01" name="salary" class="form-control @error('salary') is-invalid @enderror" value="{{ old('salary', '4000.00') }}" placeholder="0.00">
                             @error('salary') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>

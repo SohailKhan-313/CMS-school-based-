@@ -66,7 +66,7 @@
                             <tr>
                                 <th>Fee Item Description</th>
                                 <th class="text-center">Category</th>
-                                <th class="text-end">Amount ($)</th>
+                                <th class="text-end">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,21 +76,21 @@
                                     @if($invoice->notes)<div class="small text-muted">{{ $invoice->notes }}</div>@endif
                                 </td>
                                 <td class="text-center align-middle"><span class="badge bg-light text-dark border">{{ ucfirst($invoice->fee_type) }}</span></td>
-                                <td class="text-end align-middle fw-bold">${{ number_format((float) $invoice->total_amount, 2) }}</td>
+                                <td class="text-end align-middle fw-bold">{{ number_format((float) $invoice->total_amount, 2) }}</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th colspan="2" class="text-end">Total Billed:</th>
-                                <th class="text-end">${{ number_format((float) $invoice->total_amount, 2) }}</th>
+                                <th class="text-end">{{ number_format((float) $invoice->total_amount, 2) }}</th>
                             </tr>
                             <tr class="table-success">
                                 <th colspan="2" class="text-end">Total Paid:</th>
-                                <th class="text-end text-success">${{ number_format((float) $invoice->paid_amount, 2) }}</th>
+                                <th class="text-end text-success">{{ number_format((float) $invoice->paid_amount, 2) }}</th>
                             </tr>
                             <tr class="table-light">
                                 <th colspan="2" class="text-end">Outstanding Balance Due:</th>
-                                <th class="text-end text-danger">${{ number_format((float) $invoice->balance, 2) }}</th>
+                                <th class="text-end text-danger">{{ number_format((float) $invoice->balance, 2) }}</th>
                             </tr>
                         </tfoot>
                     </table>

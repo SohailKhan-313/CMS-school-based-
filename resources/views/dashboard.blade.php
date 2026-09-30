@@ -94,7 +94,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <span class="text-secondary small text-uppercase fw-semibold">Fees Collected</span>
-                                <h2 class="fw-bold text-success my-1">${{ number_format($totalCollected, 0) }}</h2>
+                                <h2 class="fw-bold text-success my-1">{{ number_format($totalCollected, 0) }}</h2>
                                 <span class="badge bg-success-subtle text-success fs-8">
                                     {{ $collectionRate }}% Collection Rate
                                 </span>
@@ -119,9 +119,9 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <span class="text-secondary small text-uppercase fw-semibold">Pending Dues</span>
-                                <h2 class="fw-bold text-danger my-1">${{ number_format($totalOutstanding, 0) }}</h2>
+                                <h2 class="fw-bold text-danger my-1">{{ number_format($totalOutstanding, 0) }}</h2>
                                 <span class="badge bg-danger-subtle text-danger fs-8">
-                                    Total Billed: ${{ number_format($totalBilled, 0) }}
+                                    Total Billed: {{ number_format($totalBilled, 0) }}
                                 </span>
                             </div>
                             <div class="bg-danger-subtle text-danger p-3 rounded-circle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
@@ -271,9 +271,9 @@
                                             <div class="small text-muted">{{ $inv->title }}</div>
                                         </td>
                                         <td>
-                                            <div class="fw-semibold">${{ number_format((float) $inv->total_amount, 2) }}</div>
+                                            <div class="fw-semibold">{{ number_format((float) $inv->total_amount, 2) }}</div>
                                             @if($inv->balance > 0)
-                                                <div class="small text-danger">Bal: ${{ number_format((float) $inv->balance, 2) }}</div>
+                                                <div class="small text-danger">Bal: {{ number_format((float) $inv->balance, 2) }}</div>
                                             @endif
                                         </td>
                                         <td>

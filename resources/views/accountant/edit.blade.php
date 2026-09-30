@@ -68,12 +68,12 @@
                     <h5 class="text-success fw-bold mb-3 border-bottom pb-2">Financials & Payment Collection</h5>
                     <div class="row g-3 mb-4">
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Total Amount ($) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Total Amount <span class="text-danger">*</span></label>
                             <input type="number" step="0.01" name="total_amount" class="form-control @error('total_amount') is-invalid @enderror" value="{{ old('total_amount', $invoice->total_amount) }}" required>
                             @error('total_amount') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Paid Amount ($)</label>
+                            <label class="form-label fw-semibold">Paid Amount</label>
                             <input type="number" step="0.01" name="paid_amount" class="form-control @error('paid_amount') is-invalid @enderror" value="{{ old('paid_amount', $invoice->paid_amount) }}">
                             @error('paid_amount') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>

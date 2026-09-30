@@ -74,7 +74,7 @@
                         </div>
                         <div class="d-flex justify-content-between py-1">
                             <span class="text-muted">Monthly Salary:</span>
-                            <span class="fw-semibold text-success">${{ number_format((float) $teacher->salary, 2) }}</span>
+                            <span class="fw-semibold text-success">{{ number_format((float) $teacher->salary, 2) }}</span>
                         </div>
                     </div>
                 </div>

@@ -64,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
                         return [
                             'type' => 'invoice',
                             'title' => ($isNew ? 'Fee Voucher Issued: ' : 'Fee Voucher Updated: ').$inv->invoice_number,
-                            'subtitle' => $studentName.' - $'.number_format((float) $inv->total_amount, 2).' ('.ucfirst($inv->status).')',
+                            'subtitle' => $studentName.' - '.number_format((float) $inv->total_amount, 2).' ('.ucfirst($inv->status).')',
                             'url' => route('accountant.show', $inv->id),
                             'time' => $inv->updated_at->diffForHumans(),
                             'icon' => 'bi-receipt',

@@ -49,7 +49,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="text-white-50 small text-uppercase fw-semibold">Total Fees Billed</div>
-                            <div class="fs-3 fw-bold mt-1">${{ number_format($totalBilled, 2) }}</div>
+                            <div class="fs-3 fw-bold mt-1">{{ number_format($totalBilled, 2) }}</div>
                         </div>
                         <i class="bi bi-receipt fs-1 text-white-50"></i>
                     </div>
@@ -60,7 +60,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="text-white-50 small text-uppercase fw-semibold">Total Revenue Collected</div>
-                            <div class="fs-3 fw-bold mt-1">${{ number_format($totalCollected, 2) }}</div>
+                            <div class="fs-3 fw-bold mt-1">{{ number_format($totalCollected, 2) }}</div>
                         </div>
                         <i class="bi bi-cash-coin fs-1 text-white-50"></i>
                     </div>
@@ -71,7 +71,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <div class="text-white-50 small text-uppercase fw-semibold">Outstanding Dues</div>
-                            <div class="fs-3 fw-bold mt-1">${{ number_format($totalPending, 2) }}</div>
+                            <div class="fs-3 fw-bold mt-1">{{ number_format($totalPending, 2) }}</div>
                         </div>
                         <i class="bi bi-exclamation-triangle-fill fs-1 text-white-50"></i>
                     </div>
@@ -128,9 +128,9 @@
                             <th>Student & Class</th>
                             <th>Fee Title</th>
                             <th>Category</th>
-                            <th>Billed ($)</th>
-                            <th>Paid ($)</th>
-                            <th>Balance ($)</th>
+                            <th>Billed</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
                             <th>Due Date</th>
                             <th>Status</th>
                             <th class="text-end pe-3">Actions</th>
@@ -146,11 +146,11 @@
                                 </td>
                                 <td>{{ $inv->title }}</td>
                                 <td><span class="badge bg-light text-dark border">{{ ucfirst($inv->fee_type) }}</span></td>
-                                <td class="fw-semibold">${{ number_format((float) $inv->total_amount, 2) }}</td>
-                                <td class="text-success fw-semibold">${{ number_format((float) $inv->paid_amount, 2) }}</td>
+                                <td class="fw-semibold">{{ number_format((float) $inv->total_amount, 2) }}</td>
+                                <td class="text-success fw-semibold">{{ number_format((float) $inv->paid_amount, 2) }}</td>
                                 <td>
                                     @if($inv->balance > 0)
-                                        <span class="text-danger fw-bold">${{ number_format((float) $inv->balance, 2) }}</span>
+                                        <span class="text-danger fw-bold">{{ number_format((float) $inv->balance, 2) }}</span>
                                     @else
                                         <span class="text-success"><i class="bi bi-check-circle-fill"></i> Nil</span>
                                     @endif
@@ -254,11 +254,11 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Total Amount Billed ($) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Total Amount Billed <span class="text-danger">*</span></label>
                             <input type="number" step="0.01" name="total_amount" class="form-control" placeholder="350.00" required>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-semibold">Initial Paid Amount ($)</label>
+                            <label class="form-label fw-semibold">Initial Paid Amount</label>
                             <input type="number" step="0.01" name="paid_amount" class="form-control" value="0.00" min="0">
                         </div>
                         <div class="col-md-4">

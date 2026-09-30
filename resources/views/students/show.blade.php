@@ -109,19 +109,19 @@
                     <div class="col-md-4">
                         <div class="card border-0 bg-primary text-white shadow-sm p-3">
                             <div class="small text-white-50">Total Fees Incurred</div>
-                            <div class="fs-4 fw-bold mt-1">${{ number_format($student->totalFees(), 2) }}</div>
+                            <div class="fs-4 fw-bold mt-1">{{ number_format($student->totalFees(), 2) }}</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card border-0 bg-success text-white shadow-sm p-3">
                             <div class="small text-white-50">Total Fees Paid</div>
-                            <div class="fs-4 fw-bold mt-1">${{ number_format($student->paidFees(), 2) }}</div>
+                            <div class="fs-4 fw-bold mt-1">{{ number_format($student->paidFees(), 2) }}</div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="card border-0 bg-danger text-white shadow-sm p-3">
                             <div class="small text-white-50">Outstanding Balance</div>
-                            <div class="fs-4 fw-bold mt-1">${{ number_format($student->dueFees(), 2) }}</div>
+                            <div class="fs-4 fw-bold mt-1">{{ number_format($student->dueFees(), 2) }}</div>
                         </div>
                     </div>
                 </div>
@@ -152,8 +152,8 @@
                                     <tr>
                                         <td class="fw-bold text-primary">{{ $inv->invoice_number }}</td>
                                         <td>{{ $inv->title }}</td>
-                                        <td>${{ number_format((float) $inv->total_amount, 2) }}</td>
-                                        <td class="text-success">${{ number_format((float) $inv->paid_amount, 2) }}</td>
+                                        <td>{{ number_format((float) $inv->total_amount, 2) }}</td>
+                                        <td class="text-success">{{ number_format((float) $inv->paid_amount, 2) }}</td>
                                         <td>{{ $inv->due_date ? $inv->due_date->format('d M Y') : '-' }}</td>
                                         <td>
                                             @if($inv->status === 'paid')

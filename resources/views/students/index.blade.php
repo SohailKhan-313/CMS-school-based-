@@ -140,7 +140,7 @@
                                     @if($due <= 0 && $student->feeInvoices->count() > 0)
                                         <span class="badge bg-success text-white"><i class="bi bi-check2"></i> Cleared</span>
                                     @elseif($due > 0)
-                                        <span class="badge bg-warning text-dark">${{ number_format($due, 0) }} Due</span>
+                                        <span class="badge bg-warning text-dark">{{ number_format($due, 0) }} Due</span>
                                     @else
                                         <span class="badge bg-light text-muted">No Invoices</span>
                                     @endif
@@ -243,9 +243,9 @@
                                                             <div class="p-3 bg-light rounded-3">
                                                                 <span class="text-muted small d-block">Fee Balance</span>
                                                                 @if($student->dueFees() > 0)
-                                                                    <span class="fw-bold text-danger">${{ number_format($student->dueFees(), 2) }} Outstanding</span>
+                                                                    <span class="fw-bold text-danger">{{ number_format($student->dueFees(), 2) }} Outstanding</span>
                                                                 @else
-                                                                    <span class="fw-bold text-success"><i class="bi bi-check-circle-fill me-1"></i>All Cleared ($0 Due)</span>
+                                                                    <span class="fw-bold text-success"><i class="bi bi-check-circle-fill me-1"></i>All Cleared (0 Due)</span>
                                                                 @endif
                                                             </div>
                                                         </div>

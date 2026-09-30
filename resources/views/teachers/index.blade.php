@@ -211,7 +211,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="p-3 bg-light rounded-3">
                                                                 <span class="text-muted small d-block">Monthly Salary</span>
-                                                                <span class="fw-bold text-success">${{ number_format((float) $teacher->salary, 2) }}</span>
+                                                                <span class="fw-bold text-success">{{ number_format((float) $teacher->salary, 2) }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
@@ -361,7 +361,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Monthly Salary ($)</label>
+                            <label class="form-label fw-semibold">Monthly Salary</label>
                             <input type="number" step="0.01" name="salary" class="form-control" placeholder="5000.00">
                         </div>
                         <div class="col-md-6">
