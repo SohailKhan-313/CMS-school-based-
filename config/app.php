@@ -52,11 +52,17 @@ return [
     |
     */
 
-    'url' => (str_starts_with((string) env('APP_URL'), 'http://') || str_starts_with((string) env('APP_URL'), 'https://'))
-        && strlen((string) env('APP_URL')) > 8
-        && ! str_contains((string) env('APP_URL'), '${{')
-        ? env('APP_URL')
-        : 'http://localhost',
+    'url' => (function () {
+        $trimmed = trim((string) env('APP_URL', ''));
+        if (! empty($trimmed)) {
+            $parts = @parse_url($trimmed);
+            if ($parts !== false && ! empty($parts['host']) && ! str_contains($trimmed, '${{')) {
+                return $trimmed;
+            }
+        }
+
+        return 'http://localhost';
+    })(),
 
     /*
     |--------------------------------------------------------------------------
