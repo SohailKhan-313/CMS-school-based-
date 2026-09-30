@@ -1,0 +1,6 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "variables": {
+    "RAILPACK_PHP_EXTENSIONS": "gd,pdo_mysql,pdo_sqlite"
+  }
+}
