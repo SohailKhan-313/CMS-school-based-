@@ -42,7 +42,15 @@ class SchoolClassController extends Controller
 
     public function store(StoreSchoolClassRequest $request): RedirectResponse
     {
-        SchoolClass::create($request->validated());
+        $validated = $request->validated();
+        $redirectTo = $validated['redirect_to'] ?? null;
+        unset($validated['redirect_to']);
+
+        $class = SchoolClass::create($validated);
+
+        if ($redirectTo === 'dashboard') {
+            return redirect()->route('home')->with('success', "Class '{$class->full_name}' was created successfully and is now live on the dashboard.");
+        }
 
         return redirect()->route('classes.index')->with('success', 'Class created successfully.');
     }

@@ -434,3 +434,43 @@ test('roles with only view and file permissions do not see irrelevant action but
     $showResponse->assertDontSee('Edit Profile');
     $showResponse->assertDontSee('Issue Fee Voucher');
 });
+
+test('new classes can be added and are displayed on the dashboard graph in natural academic order', function () {
+    $teacher = Teacher::create([
+        'name' => 'Prof. Class Coordinator',
+        'employee_code' => 'TCH-TEST-CLS',
+        'email' => 'coordinator@school.com',
+        'status' => 'active',
+    ]);
+
+    // 1. Create a class from the dashboard modal (redirect_to = dashboard)
+    $response = $this->post(route('classes.store'), [
+        'name' => 'Grade 7',
+        'section' => 'C',
+        'room_number' => 'Room 205',
+        'capacity' => 32,
+        'teacher_id' => $teacher->id,
+        'redirect_to' => 'dashboard',
+    ]);
+
+    $response->assertRedirect(route('home'));
+    $response->assertSessionHas('success');
+
+    // 2. Create another class (Grade 1 - B)
+    $this->post(route('classes.store'), [
+        'name' => 'Grade 1',
+        'section' => 'B',
+        'room_number' => 'Room 106',
+        'capacity' => 28,
+        'teacher_id' => $teacher->id,
+        'redirect_to' => 'dashboard',
+    ])->assertRedirect(route('home'));
+
+    // 3. Verify Dashboard Graph shows both classes
+    $dashboardResponse = $this->get(route('home'));
+    $dashboardResponse->assertStatus(200);
+    $dashboardResponse->assertSee('Grade 1 - B');
+    $dashboardResponse->assertSee('Grade 7 - C');
+    $dashboardResponse->assertSee('id="createClassDashboardModal"', false);
+    $dashboardResponse->assertSee('enrollment-chart');
+});

@@ -27,10 +27,30 @@ class DashboardController extends Controller
         $totalOutstanding = max(0, $totalBilled - $totalCollected);
         $collectionRate = $totalBilled > 0 ? round(($totalCollected / $totalBilled) * 100, 1) : 0;
 
-        // Class Enrollment Breakdown (for ApexChart)
-        $classesDistribution = SchoolClass::withCount('students')->orderBy('name')->get();
-        $classLabels = $classesDistribution->pluck('full_name')->toArray();
+        // Class Enrollment Breakdown (for ApexChart) with Natural Grade Ordering
+        $classesDistribution = SchoolClass::withCount('students')
+            ->get()
+            ->sortBy(function ($class) {
+                $nameLower = strtolower($class->name);
+                if (str_contains($nameLower, 'nursery')) {
+                    $order = 0;
+                } elseif (str_contains($nameLower, 'prep') || str_contains($nameLower, 'kg') || str_contains($nameLower, 'kindergarten')) {
+                    $order = 1;
+                } elseif (preg_match('/\d+/', $class->name, $matches)) {
+                    $order = ((int) $matches[0]) + 2;
+                } else {
+                    $order = 999;
+                }
+
+                return sprintf('%04d-%s-%s', $order, $class->name, $class->section);
+            })
+            ->values();
+
+        $classLabels = $classesDistribution->map(fn ($c) => $c->full_name)->toArray();
         $classStudentCounts = $classesDistribution->pluck('students_count')->toArray();
+
+        // Active Faculty for Modal Selection
+        $teachers = Teacher::where('status', 'active')->orderBy('name')->get();
 
         // Fee Status Breakdown (for Pie/Donut Chart)
         $paidInvoicesCount = FeeInvoice::where('status', 'paid')->count();
@@ -55,6 +75,7 @@ class DashboardController extends Controller
             'collectionRate',
             'classLabels',
             'classStudentCounts',
+            'teachers',
             'paidInvoicesCount',
             'partialInvoicesCount',
             'unpaidInvoicesCount',

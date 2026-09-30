@@ -155,17 +155,24 @@
             {{-- Class Enrollment Bar Chart --}}
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+                    <div class="card-header bg-white py-3 border-0 d-flex flex-wrap justify-content-between align-items-center gap-2">
                         <div>
                             <h5 class="fw-bold text-dark mb-0"><i class="bi bi-bar-chart-fill text-primary me-2"></i>Class Enrollment Distribution</h5>
-                            <span class="text-muted small">Live student counts enrolled per class & section</span>
+                            <span class="text-muted small">Live student counts enrolled across all {{ $totalClasses }} classes</span>
                         </div>
-                        <a href="{{ route('classes.index') }}" class="btn btn-sm btn-outline-primary">
-                            All Classes ({{ $totalClasses }})
-                        </a>
+                        <div class="d-flex align-items-center gap-2">
+                            @can('create class')
+                            <button type="button" class="btn btn-sm btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createClassDashboardModal">
+                                <i class="bi bi-plus-circle me-1"></i> Add Class
+                            </button>
+                            @endcan
+                            <a href="{{ route('classes.index') }}" class="btn btn-sm btn-outline-primary">
+                                All Classes ({{ $totalClasses }})
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body p-3">
-                        <div id="enrollment-chart" style="min-height: 320px; height: 320px; width: 100%;"></div>
+                        <div id="enrollment-chart" style="min-height: 350px; height: 350px; width: 100%;"></div>
                     </div>
                 </div>
             </div>
@@ -324,6 +331,69 @@
     </div>
 </div>
 <!--end::App Content-->
+
+@can('create class')
+<!-- ========================================== -->
+<!-- BOOTSTRAP MODAL: QUICK ADD NEW CLASS       -->
+<!-- ========================================== -->
+<div class="modal fade" id="createClassDashboardModal" tabindex="-1" aria-labelledby="createClassDashboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered my-3">
+        <div class="modal-content border-0 shadow-lg">
+            <form action="{{ route('classes.store') }}" method="POST" class="d-flex flex-column m-0">
+                @csrf
+                <input type="hidden" name="redirect_to" value="dashboard">
+                <div class="modal-header bg-primary text-white py-3">
+                    <h5 class="modal-title fw-bold" id="createClassDashboardModalLabel">
+                        <i class="bi bi-plus-circle me-2"></i>Add New Class & Section
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Class Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control" placeholder="e.g. Grade 1, Grade 7, Nursery" required>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Section <span class="text-danger">*</span></label>
+                            <input type="text" name="section" class="form-control" placeholder="e.g. A, B, or Green" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold">Max Capacity <span class="text-danger">*</span></label>
+                            <input type="number" name="capacity" class="form-control" value="35" min="1" max="150" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Room Number</label>
+                        <input type="text" name="room_number" class="form-control" placeholder="e.g. Room 105 or Lab 2">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Assigned Class Teacher</label>
+                        <select name="teacher_id" class="form-select">
+                            <option value="">-- No Class Teacher Assigned --</option>
+                            @if(isset($teachers))
+                                @foreach($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }} ({{ $teacher->specialization ?? 'Faculty' }})</option>
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light py-2">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm px-3 fw-semibold shadow-sm">
+                        <i class="bi bi-check-circle-fill me-1"></i> Save Class
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endcan
+
 @endsection
 
 @push('scripts')
@@ -333,6 +403,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const classLabels = @json($classLabels);
     const classCounts = @json($classStudentCounts);
 
+    // Expanded distinct color palette for all classes
+    const colorPalette = [
+        '#0d6efd', '#198754', '#0dcaf0', '#fd7e14', '#6f42c1', 
+        '#20c997', '#ffc107', '#d63384', '#3b82f6', '#10b981', 
+        '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16', 
+        '#6366f1', '#14b8a6', '#f97316', '#a855f7', '#0284c7'
+    ];
+
     const enrollmentOptions = {
         series: [{
             name: 'Enrolled Students',
@@ -340,8 +418,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }],
         chart: {
             type: 'bar',
-            height: 320,
-            toolbar: { show: false },
+            height: 350,
+            toolbar: { 
+                show: true,
+                tools: {
+                    download: true,
+                    selection: false,
+                    zoom: false,
+                    zoomin: false,
+                    zoomout: false,
+                    pan: false,
+                    reset: false
+                }
+            },
             animations: {
                 enabled: false
             },
@@ -351,22 +440,83 @@ document.addEventListener('DOMContentLoaded', function () {
         plotOptions: {
             bar: {
                 borderRadius: 4,
-                columnWidth: '45%',
-                distributed: true
+                columnWidth: classLabels.length > 8 ? '55%' : '40%',
+                distributed: true,
+                dataLabels: {
+                    position: 'top'
+                }
             }
         },
-        dataLabels: { enabled: true },
-        colors: ['#0d6efd', '#20c997', '#ffc107', '#fd7e14', '#6f42c1', '#0dcaf0'],
+        dataLabels: { 
+            enabled: true,
+            formatter: function (val) {
+                return val;
+            },
+            offsetY: -20,
+            style: {
+                fontSize: '11px',
+                fontWeight: 600,
+                colors: ["#304758"]
+            }
+        },
+        colors: colorPalette.slice(0, Math.max(classLabels.length, colorPalette.length)),
         xaxis: {
             categories: classLabels,
             labels: {
-                style: { fontSize: '12px' }
+                rotate: -45,
+                rotateAlways: classLabels.length > 5,
+                hideOverlappingLabels: false,
+                trim: true,
+                maxHeight: 90,
+                style: { 
+                    fontSize: '11px',
+                    fontWeight: 500
+                }
+            },
+            axisBorder: {
+                show: true,
+                color: '#e0e0e0'
+            },
+            axisTicks: {
+                show: true,
+                color: '#e0e0e0'
             }
         },
         yaxis: {
-            title: { text: 'Number of Students' }
+            title: { 
+                text: 'Number of Students',
+                style: {
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    color: '#6c757d'
+                }
+            },
+            min: 0,
+            forceNiceScale: true,
+            labels: {
+                formatter: function (val) {
+                    return Math.round(val);
+                }
+            }
         },
-        legend: { show: false }
+        tooltip: {
+            theme: 'light',
+            y: {
+                formatter: function(val) {
+                    return val + (val === 1 ? ' Enrolled Student' : ' Enrolled Students');
+                }
+            }
+        },
+        legend: { show: false },
+        grid: {
+            borderColor: '#f1f1f1',
+            strokeDashArray: 4,
+            yaxis: {
+                lines: {
+                    show: true
+                }
+            }
+        }
     };
 
     const enrollmentChartElem = document.querySelector("#enrollment-chart");

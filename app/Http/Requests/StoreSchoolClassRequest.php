@@ -22,6 +22,7 @@ class StoreSchoolClassRequest extends FormRequest
             'room_number' => ['nullable', 'string', 'max:50'],
             'capacity' => ['required', 'integer', 'min:1', 'max:200'],
             'teacher_id' => ['nullable', 'exists:teachers,id'],
+            'redirect_to' => ['nullable', 'string', 'in:dashboard,classes'],
         ];
     }
 }
