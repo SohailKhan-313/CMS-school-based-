@@ -8,9 +8,9 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-diagram-3-fill text-primary me-2"></i>{{ $class->full_name }}</h3>
                 <p class="text-secondary small mb-0">Room: {{ $class->room_number ?? 'TBA' }} | Class Teacher: {{ $class->teacher ? $class->teacher->name : 'Unassigned' }}</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('create student')
-                <a href="{{ route('students.create') }}?school_class_id={{ $class->id }}" class="btn btn-primary me-2">
+                <a href="{{ route('students.create') }}?school_class_id={{ $class->id }}" class="btn btn-primary">
                     <i class="bi bi-person-plus-fill me-1"></i> Enroll Student in this Class
                 </a>
                 @endcan
@@ -25,7 +25,7 @@
 <div class="app-content">
     <div class="container-fluid">
         <div class="card border-0 shadow-sm">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <h5 class="fw-bold text-dark mb-0">Enrolled Students in {{ $class->full_name }} ({{ $class->students->count() }} / {{ $class->capacity }})</h5>
             </div>
             <div class="table-responsive">
@@ -39,7 +39,7 @@
                             <th>Guardian Name</th>
                             <th>Phone</th>
                             <th>Status</th>
-                            <th class="text-end pe-3">Actions</th>
+                            <th class="text-end pe-3 text-nowrap">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +56,7 @@
                                         {{ ucfirst($student->status) }}
                                     </span>
                                 </td>
-                                <td class="text-end pe-3">
+                                <td class="text-end pe-3 text-nowrap">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
                                         @can('print student')
                                         <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip">

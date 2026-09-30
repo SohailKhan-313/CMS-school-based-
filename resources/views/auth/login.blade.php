@@ -57,7 +57,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-5 col-lg-4">
+        <div class="col-12 col-sm-9 col-md-7 col-lg-5 col-xl-4">
             
             <div class="card login-card">
                 <div class="brand-header">
@@ -137,7 +137,7 @@
                             <span class="badge bg-secondary-subtle text-secondary small">Password: <code>password</code></span>
                         </div>
                         <div class="row g-2">
-                            <div class="col-6">
+                            <div class="col-sm-6 col-12">
                                 <div class="demo-chip" onclick="fillCredentials('admin@school.com', 'password')">
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-shield-lock-fill text-primary me-2"></i>
@@ -148,7 +148,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6 col-12">
                                 <div class="demo-chip" onclick="fillCredentials('accountant@school.com', 'password')">
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-cash-stack text-success me-2"></i>
@@ -159,7 +159,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6 col-12">
                                 <div class="demo-chip" onclick="fillCredentials('teacher@school.com', 'password')">
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-person-workspace text-info me-2"></i>
@@ -170,7 +170,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-sm-6 col-12">
                                 <div class="demo-chip" onclick="fillCredentials('student@school.com', 'password')">
                                     <div class="d-flex align-items-center">
                                         <i class="bi bi-backpack4 text-warning me-2"></i>

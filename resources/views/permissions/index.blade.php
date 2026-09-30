@@ -1,28 +1,27 @@
 @extends('layouts.app')
 @section('content')
 
-<h2 class="fw-bold fs-4">Permissions List</h2>
+    <div class="container py-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+            <h2 class="fw-bold fs-4 mb-0">System Permissions</h2>
+            @can('create permissions')
+            <a href="{{ route('permissions.create') }}" class="btn btn-primary">+ Add Permission</a>
+            @endcan
+        </div>
 
-<div class="container mt-5">
-    <div class="d-flex justify-content-between mb-4">
-        <h4>All Permissions</h4>
-        @can('create permissions')
-        <a href="{{ route('permissions.create') }}" class="btn btn-primary">+ Add Permission</a>
-        @endcan
-    </div>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    <div class="card shadow">
-        <div class="card-body">
-            <table class="table table-bordered table-striped text-center">
+        <div class="card shadow border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped text-center align-middle mb-0">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
                         <th>Permission Name</th>
-                        <th width="200">Actions</th>
+                        <th class="text-nowrap" width="200">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +29,7 @@
                         <tr>
                             <td>{{ $permission->id }}</td>
                             <td>{{ $permission->name }}</td>
-                            <td>
+                            <td class="text-nowrap">
                                 <div class="d-flex justify-content-start align-items-center gap-1">
                                     @can('edit permissions')
                                     <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-primary rounded-2">Edit</a>
@@ -51,6 +50,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

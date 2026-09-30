@@ -85,6 +85,40 @@
             color: #fff;
             font-weight: 600;
         }
+
+        /* Mobile-First Responsive Tweaks */
+        @media (max-width: 768px) {
+            .app-content-header {
+                padding-top: 0.75rem !important;
+                padding-bottom: 0.75rem !important;
+            }
+            .app-content {
+                padding-top: 0.75rem !important;
+            }
+        }
+        @media (max-width: 576px) {
+            .container-fluid {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+            .card-header, .card-body, .card-footer {
+                padding: 0.75rem !important;
+            }
+            .dropdown-menu-lg, .dropdown-menu-end {
+                max-width: calc(100vw - 24px) !important;
+                right: 0 !important;
+                left: auto !important;
+            }
+            .modal-dialog {
+                margin: 0.5rem !important;
+            }
+            .table th, .table td {
+                padding: 0.5rem 0.5rem !important;
+            }
+        }
+        .table-responsive {
+            -webkit-overflow-scrolling: touch;
+        }
     </style>
 </head>
 <!--end::Head-->

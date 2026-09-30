@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-person-badge-fill text-primary me-2"></i>Student Profile</h3>
                 <p class="text-secondary small mb-0">{{ $student->name }} ({{ $student->admission_number }})</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print student')
-                <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-danger me-2">
+                <a href="{{ route('students.slip', $student->id) }}" target="_blank" class="btn btn-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Slip (FPDF)
                 </a>
                 @endcan
                 @can('edit student')
-                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary me-2">
+                <a href="{{ route('students.edit', $student->id) }}" class="btn btn-outline-primary">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Profile
                 </a>
                 @endcan
@@ -132,7 +132,7 @@
 
                 {{-- Fee Invoices Table --}}
                 <div class="card border-0 shadow-sm">
-                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-cash-stack text-success me-2"></i>Fee Invoices & Statements</h5>
                         @can('create fee')
                         <a href="{{ route('accountant.create') }}?student_id={{ $student->id }}" class="btn btn-sm btn-outline-primary">
@@ -150,7 +150,7 @@
                                     <th>Paid</th>
                                     <th>Due Date</th>
                                     <th>Status</th>
-                                    <th class="text-end">Print Receipt</th>
+                                    <th class="text-end text-nowrap">Print Receipt</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -170,7 +170,7 @@
                                                 <span class="badge bg-danger-subtle text-danger">Unpaid</span>
                                             @endif
                                         </td>
-                                        <td class="text-end">
+                                        <td class="text-end text-nowrap">
                                             @can('print fee')
                                             <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger" title="Print Fee Challan">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Challan

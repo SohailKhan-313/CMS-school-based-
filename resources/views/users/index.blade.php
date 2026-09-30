@@ -3,9 +3,9 @@
 @section('content')
 <div class="container mt-5">
 
-    <div class="d-flex justify-content-between mb-4">
-        <h2 class="fw-bold fs-4">Users List</h2>
-        <div class="d-flex gap-2">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <h2 class="fw-bold fs-4 mb-0">Users List</h2>
+        <div class="d-flex flex-wrap gap-2">
             @can('see users')
             <a href="{{ route('admin.users.pdf') }}" target="_blank" class="btn btn-outline-danger">
                 <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
@@ -24,16 +24,17 @@
         </div>
     @endif
 
-    <div class="card shadow">
-        <div class="card-body">
-            <table class="table table-bordered table-striped">
+    <div class="card shadow border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
                 <thead class="table-dark text-center">
                     <tr>
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Roles</th>
-                        <th width="200">Actions</th>
+                        <th class="text-nowrap" width="200">Actions</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -47,7 +48,7 @@
                                     <span class="badge bg-info text-dark">{{ $role->name }}</span>
                                 @endforeach
                             </td>
-                            <td>
+                            <td class="text-nowrap">
                                 <div class="d-flex justify-content-center align-items-center gap-1">
                                     @can('edit users')
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary rounded-2">
@@ -77,6 +78,7 @@
                     @endif
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 

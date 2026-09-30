@@ -8,9 +8,9 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-person-workspace text-primary me-2"></i>Teachers & Faculty</h3>
                 <p class="text-secondary small mb-0">Manage teaching staff, photos, departmental specializations, and faculty sheets.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print teacher')
-                <a href="{{ route('teachers.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
+                <a href="{{ route('teachers.pdf') }}" target="_blank" class="btn btn-outline-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
                 </a>
                 @endcan
@@ -129,7 +129,7 @@
                                         <span class="badge bg-danger-subtle text-danger">Inactive</span>
                                     @endif
                                 </td>
-                                <td class="text-end pe-3">
+                                <td class="text-end text-nowrap pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
                                         @can('show teacher')
                                         {{-- 1-Click Complete Modal View --}}
@@ -139,7 +139,7 @@
                                         {{-- Full page view --}}
                                         <a href="{{ route('teachers.show', $teacher->id) }}" class="btn btn-sm btn-outline-secondary rounded-2" title="Full Page Profile">
                                             <i class="bi bi-box-arrow-up-right"></i>
-                                        </a>
+                                         </a>
                                         @endcan
                                         @can('print teacher')
                                         {{-- FPDF Print --}}
@@ -161,7 +161,7 @@
                                             <button type="submit" class="btn btn-sm btn-outline-danger rounded-2" title="Delete Teacher">
                                                 <i class="bi bi-trash-fill"></i>
                                             </button>
-                                        </form>
+                                         </form>
                                         @endcan
                                     </div>
 
@@ -182,16 +182,16 @@
                                                 </div>
                                                 <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                                                     <div class="row g-4 align-items-center mb-4 pb-3 border-bottom">
-                                                        <div class="col-auto text-center">
+                                                        <div class="col-12 col-sm-auto text-center">
                                                             @if($teacher->photo_url)
                                                                 <img src="{{ $teacher->photo_url }}" alt="{{ $teacher->name }}" class="rounded-circle object-fit-cover shadow border border-3 border-success" style="width: 90px; height: 90px;">
                                                             @else
-                                                                <div class="rounded-circle bg-success-subtle text-success fw-bold d-flex align-items-center justify-content-center shadow" style="width: 90px; height: 90px; font-size: 32px;">
+                                                                <div class="rounded-circle bg-success-subtle text-success fw-bold d-flex align-items-center justify-content-center shadow mx-auto" style="width: 90px; height: 90px; font-size: 32px;">
                                                                     {{ strtoupper(substr($teacher->name, 0, 2)) }}
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                        <div class="col">
+                                                        <div class="col-12 col-sm text-center text-sm-start mt-2 mt-sm-0">
                                                             <div class="d-flex align-items-center gap-2 mb-1">
                                                                 <h4 class="fw-bold text-dark mb-0">{{ $teacher->name }}</h4>
                                                                 @if($teacher->status === 'active')

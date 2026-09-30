@@ -8,9 +8,9 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-diagram-3-fill text-primary me-2"></i>Classes & Sections</h3>
                 <p class="text-secondary small mb-0">Manage grade levels, sections, assigned class teachers, and room capacities.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print class')
-                <a href="{{ route('classes.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
+                <a href="{{ route('classes.pdf') }}" target="_blank" class="btn btn-outline-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Classes PDF
                 </a>
                 @endcan
@@ -62,7 +62,7 @@
                             <th>Capacity</th>
                             <th>Enrolled Students</th>
                             <th>Occupancy</th>
-                            <th class="text-end pe-3">Actions</th>
+                            <th class="text-end pe-3 text-nowrap">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,7 +92,7 @@
                                         <span class="small text-muted">{{ $percent }}%</span>
                                     </div>
                                 </td>
-                                <td class="text-end pe-3">
+                                <td class="text-end pe-3 text-nowrap">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
                                         @can('show class')
                                         <a href="{{ route('classes.show', $c->id) }}" class="btn btn-sm btn-outline-info rounded-2" title="View Students">

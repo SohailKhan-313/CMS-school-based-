@@ -8,9 +8,9 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-cash-stack text-success me-2"></i>Fees & Accounts Management</h3>
                 <p class="text-secondary small mb-0">Record fee collections, issue student challans, and track outstanding balances.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print fee')
-                <a href="{{ route('accountant.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
+                <a href="{{ route('accountant.pdf') }}" target="_blank" class="btn btn-outline-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Fees Ledger PDF
                 </a>
                 @endcan
@@ -137,7 +137,7 @@
                             <th>Balance</th>
                             <th>Due Date</th>
                             <th>Status</th>
-                            <th class="text-end pe-3">Actions</th>
+                            <th class="text-end pe-3 text-nowrap">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -169,7 +169,7 @@
                                         <span class="badge bg-danger-subtle text-danger px-2 py-1">Unpaid</span>
                                     @endif
                                 </td>
-                                <td class="text-end pe-3">
+                                <td class="text-end pe-3 text-nowrap">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
                                         @can('print fee')
                                         <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Fee Challan (FPDF)">

@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-person-lines-fill text-primary me-2"></i>Faculty Profile</h3>
                 <p class="text-secondary small mb-0">{{ $teacher->name }} ({{ $teacher->employee_code }})</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print teacher')
-                <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-danger me-2">
+                <a href="{{ route('teachers.profile', $teacher->id) }}" target="_blank" class="btn btn-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Profile Sheet (FPDF)
                 </a>
                 @endcan
                 @can('edit teacher')
-                <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary me-2">
+                <a href="{{ route('teachers.edit', $teacher->id) }}" class="btn btn-outline-primary">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Profile
                 </a>
                 @endcan
@@ -98,7 +98,7 @@
                                     <th>Room #</th>
                                     <th>Capacity</th>
                                     <th>Enrolled Students</th>
-                                    <th class="text-end">View Class</th>
+                                    <th class="text-end text-nowrap">View Class</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -109,7 +109,7 @@
                                         <td>{{ $c->room_number ?? '-' }}</td>
                                         <td>{{ $c->capacity }}</td>
                                         <td><span class="badge bg-primary text-white">{{ $c->students->count() }} Students</span></td>
-                                        <td class="text-end">
+                                        <td class="text-end text-nowrap">
                                             @can('show class')
                                             <a href="{{ route('classes.show', $c->id) }}" class="btn btn-sm btn-outline-info">
                                                 <i class="bi bi-eye"></i> Details

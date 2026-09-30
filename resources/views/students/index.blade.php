@@ -8,9 +8,9 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-mortarboard-fill text-primary me-2"></i>Students Management</h3>
                 <p class="text-secondary small mb-0">Manage enrolled students, photos, academic records, and printable profile slips.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print student')
-                <a href="{{ route('students.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
+                <a href="{{ route('students.pdf') }}" target="_blank" class="btn btn-outline-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
                 </a>
                 @endcan
@@ -149,7 +149,7 @@
                                         <span class="badge bg-light text-muted">No Invoices</span>
                                     @endif
                                 </td>
-                                <td class="text-end pe-3">
+                                <td class="text-end text-nowrap pe-3">
                                     <div class="d-flex justify-content-end align-items-center gap-1">
                                          @can('show student')
                                          {{-- 1-Click Complete Modal View --}}
@@ -202,16 +202,16 @@
                                                 </div>
                                                 <div class="modal-body p-4" style="max-height: calc(85vh - 130px); overflow-y: auto;">
                                                     <div class="row g-4 align-items-center mb-4 pb-3 border-bottom">
-                                                        <div class="col-auto text-center">
+                                                        <div class="col-12 col-sm-auto text-center">
                                                             @if($student->photo_url)
                                                                 <img src="{{ $student->photo_url }}" alt="{{ $student->name }}" class="rounded-circle object-fit-cover shadow border border-3 border-primary" style="width: 90px; height: 90px;">
                                                             @else
-                                                                <div class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center shadow" style="width: 90px; height: 90px; font-size: 32px;">
+                                                                <div class="rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center shadow mx-auto" style="width: 90px; height: 90px; font-size: 32px;">
                                                                     {{ strtoupper(substr($student->name, 0, 2)) }}
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                        <div class="col">
+                                                        <div class="col-12 col-sm text-center text-sm-start mt-2 mt-sm-0">
                                                             <div class="d-flex align-items-center gap-2 mb-1">
                                                                 <h4 class="fw-bold text-dark mb-0">{{ $student->name }}</h4>
                                                                 @if($student->status === 'active')

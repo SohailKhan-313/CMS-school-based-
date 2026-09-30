@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-receipt text-success me-2"></i>Invoice Details</h3>
                 <p class="text-secondary small mb-0">{{ $invoice->invoice_number }} - {{ $invoice->title }}</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
                 @can('print fee')
-                <a href="{{ route('accountant.challan', $invoice->id) }}" target="_blank" class="btn btn-danger me-2">
+                <a href="{{ route('accountant.challan', $invoice->id) }}" target="_blank" class="btn btn-danger">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Official Challan (FPDF)
                 </a>
                 @endcan
                 @can('edit fee')
-                <a href="{{ route('accountant.edit', $invoice->id) }}" class="btn btn-outline-primary me-2">
+                <a href="{{ route('accountant.edit', $invoice->id) }}" class="btn btn-outline-primary">
                     <i class="bi bi-pencil-fill me-1"></i> Edit Invoice
                 </a>
                 @endcan
@@ -30,7 +30,7 @@
 <div class="app-content">
     <div class="container-fluid">
         <div class="card border-0 shadow-sm" style="max-width: 850px; margin: 0 auto;">
-            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+            <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
                 <div>
                     <h5 class="fw-bold text-dark mb-0">EXCELLENCE ACADEMY</h5>
                     <span class="text-muted small">Official Student Fee Challan & Invoice Record</span>
@@ -100,7 +100,7 @@
                     </table>
                 </div>
 
-                <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 pt-3 border-top">
                     <div class="text-muted small">
                         Recorded by: {{ $invoice->creator ? $invoice->creator->name : 'System Accountant' }}
                     </div>

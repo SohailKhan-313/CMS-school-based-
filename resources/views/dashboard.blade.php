@@ -11,7 +11,7 @@
                 </h3>
                 <p class="text-secondary small mb-0">Live interconnected overview of students, faculty, classes, and financial accounting.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex justify-content-sm-end">
                 @canany(['print student', 'print teacher', 'print class', 'print fee', 'see users'])
                 <div class="btn-group">
                     <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -210,7 +210,7 @@
             {{-- Recent Student Admissions --}}
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
+                    <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2 border-0">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-mortarboard text-primary me-2"></i>Recent Student Admissions</h5>
                         @can('create student')
                         <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary">
@@ -226,7 +226,7 @@
                                     <th>Student</th>
                                     <th>Class</th>
                                     <th>Status</th>
-                                    <th class="text-end pe-3">Actions</th>
+                                    <th class="text-end pe-3 text-nowrap">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -245,7 +245,7 @@
                                         <td>
                                             <span class="badge bg-success-subtle text-success">Active</span>
                                         </td>
-                                        <td class="text-end pe-3">
+                                        <td class="text-end pe-3 text-nowrap">
                                             <div class="d-flex justify-content-end align-items-center gap-1">
                                                 @can('print student')
                                                 <a href="{{ route('students.slip', $s->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2" title="Print Slip (FPDF)">
@@ -270,7 +270,7 @@
             {{-- Recent Invoices & Payments --}}
             <div class="col-lg-6">
                 <div class="card border-0 shadow-sm h-100">
-                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-0">
+                    <div class="card-header bg-white py-3 d-flex flex-wrap justify-content-between align-items-center gap-2 border-0">
                         <h5 class="fw-bold text-dark mb-0"><i class="bi bi-cash-stack text-success me-2"></i>Recent Fee Invoices</h5>
                         @can('create fee')
                         <a href="{{ route('accountant.create') }}" class="btn btn-sm btn-success">
@@ -286,7 +286,7 @@
                                     <th>Student</th>
                                     <th>Amount</th>
                                     <th>Status</th>
-                                    <th class="text-end pe-3">Challan PDF</th>
+                                    <th class="text-end pe-3 text-nowrap">Challan PDF</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -312,7 +312,7 @@
                                                 <span class="badge bg-danger-subtle text-danger">Unpaid</span>
                                             @endif
                                         </td>
-                                        <td class="text-end pe-3">
+                                        <td class="text-end pe-3 text-nowrap">
                                             @can('print fee')
                                             <a href="{{ route('accountant.challan', $inv->id) }}" target="_blank" class="btn btn-sm btn-outline-danger rounded-2">
                                                 <i class="bi bi-file-earmark-pdf-fill"></i> Challan
@@ -516,7 +516,55 @@ document.addEventListener('DOMContentLoaded', function () {
                     show: true
                 }
             }
-        }
+        },
+        responsive: [
+            {
+                breakpoint: 768,
+                options: {
+                    chart: {
+                        height: 380
+                    },
+                    plotOptions: {
+                        bar: {
+                            columnWidth: '70%'
+                        }
+                    },
+                    xaxis: {
+                        labels: {
+                            rotate: -60,
+                            rotateAlways: true,
+                            maxHeight: 120,
+                            style: {
+                                fontSize: '10px'
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        height: 420
+                    },
+                    xaxis: {
+                        labels: {
+                            rotate: -90,
+                            rotateAlways: true,
+                            maxHeight: 130,
+                            style: {
+                                fontSize: '9px'
+                            }
+                        }
+                    },
+                    yaxis: {
+                        title: {
+                            text: ''
+                        }
+                    }
+                }
+            }
+        ]
     };
 
     const enrollmentChartElem = document.querySelector("#enrollment-chart");
@@ -546,7 +594,20 @@ document.addEventListener('DOMContentLoaded', function () {
         legend: {
             position: 'bottom'
         },
-        dataLabels: { enabled: true }
+        dataLabels: { enabled: true },
+        responsive: [
+            {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        height: 220
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        ]
     };
 
     const feeStatusChartElem = document.querySelector("#fee-status-chart");
