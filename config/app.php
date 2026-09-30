@@ -52,7 +52,11 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => (str_starts_with((string) env('APP_URL'), 'http://') || str_starts_with((string) env('APP_URL'), 'https://'))
+        && strlen((string) env('APP_URL')) > 8
+        && ! str_contains((string) env('APP_URL'), '${{')
+        ? env('APP_URL')
+        : 'http://localhost',
 
     /*
     |--------------------------------------------------------------------------
