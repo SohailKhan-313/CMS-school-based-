@@ -57,6 +57,10 @@
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
 
     <style>
+        .sidebar-overlay {
+            display: none;
+        }
+
         /* =========================================================
            MOBILE & RESPONSIVE LAYOUT ENGINE (AdminLTE 4 Fixes)
            ========================================================= */
@@ -122,16 +126,19 @@
                 margin-left: 0 !important;
             }
 
-            /* Mobile backdrop overlay */
+            /* Mobile backdrop overlay - hidden by default, shown ONLY when sidebar drawer is open */
             .sidebar-overlay {
+                display: none !important;
+            }
+
+            body.sidebar-open .sidebar-overlay {
+                display: block !important;
                 position: fixed !important;
                 inset: 0 !important;
                 width: 100vw !important;
                 height: 100vh !important;
                 z-index: 1045 !important;
-                background-color: rgba(0, 0, 0, 0.5) !important;
-                backdrop-filter: blur(2px) !important;
-                -webkit-backdrop-filter: blur(2px) !important;
+                background-color: rgba(0, 0, 0, 0.45) !important;
                 cursor: pointer;
             }
 
