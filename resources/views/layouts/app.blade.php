@@ -57,6 +57,151 @@
         integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4=" crossorigin="anonymous" />
 
     <style>
+        /* =========================================================
+           MOBILE & RESPONSIVE LAYOUT ENGINE (AdminLTE 4 Fixes)
+           ========================================================= */
+        @media (max-width: 991.98px) {
+            html, body {
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                position: relative;
+            }
+
+            /* Convert grid to single-column flex stack on mobile to prevent 2-column crash */
+            .app-wrapper {
+                display: flex !important;
+                flex-direction: column !important;
+                min-height: 100vh !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+            }
+
+            .app-header {
+                width: 100% !important;
+                max-width: 100vw !important;
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 1030 !important;
+                flex-shrink: 0 !important;
+                background-color: var(--bs-body-bg) !important;
+            }
+
+            .app-main {
+                flex: 1 0 auto !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                min-width: 0 !important;
+                overflow-x: hidden !important;
+                padding-bottom: 1.5rem !important;
+            }
+
+            .app-footer {
+                width: 100% !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Off-canvas mobile sidebar drawer */
+            .app-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                width: 270px !important;
+                max-width: 82vw !important;
+                z-index: 1050 !important;
+                margin-left: -270px !important;
+                transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.35) !important;
+            }
+
+            body.sidebar-open .app-sidebar {
+                margin-left: 0 !important;
+            }
+
+            /* Mobile backdrop overlay */
+            .sidebar-overlay {
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                z-index: 1045 !important;
+                background-color: rgba(0, 0, 0, 0.5) !important;
+                backdrop-filter: blur(2px) !important;
+                -webkit-backdrop-filter: blur(2px) !important;
+                cursor: pointer;
+            }
+
+            .app-content-header {
+                padding: 0.75rem 0.5rem !important;
+            }
+
+            .app-content {
+                padding: 0.5rem 0.5rem 1.5rem !important;
+            }
+        }
+
+        /* Smaller mobile screens (< 576px) */
+        @media (max-width: 575.98px) {
+            .container-fluid {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+
+            .card-header, .card-body, .card-footer {
+                padding: 0.75rem !important;
+            }
+
+            .app-header .navbar-nav .nav-link {
+                padding-left: 0.35rem !important;
+                padding-right: 0.35rem !important;
+            }
+
+            .dropdown-menu-lg, .dropdown-menu-end {
+                max-width: calc(100vw - 16px) !important;
+                right: 0 !important;
+                left: auto !important;
+            }
+
+            .user-menu .dropdown-menu {
+                min-width: 240px;
+                max-width: calc(100vw - 16px) !important;
+            }
+
+            .modal-dialog {
+                margin: 0.5rem !important;
+                max-width: calc(100vw - 1rem) !important;
+            }
+
+            .modal-body {
+                padding: 0.875rem !important;
+            }
+
+            .table th, .table td {
+                padding: 0.5rem 0.4rem !important;
+            }
+        }
+
+        /* Table Responsiveness Touch-Friendly Scrollbars */
+        .table-responsive {
+            max-width: 100% !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 0.375rem;
+        }
+
+        .table-responsive::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.18);
+            border-radius: 4px;
+        }
+
         /* Global Pagination Styling & SVG Arrow Constraints */
         nav svg, .pagination svg {
             width: 1rem !important;
@@ -69,11 +214,13 @@
         .pagination {
             margin-bottom: 0;
             gap: 2px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .pagination .page-item .page-link {
             border-radius: 6px;
-            padding: 0.35rem 0.75rem;
-            font-size: 0.875rem;
+            padding: 0.35rem 0.65rem;
+            font-size: 0.85rem;
             color: #495057;
             display: inline-flex;
             align-items: center;
@@ -85,40 +232,6 @@
             color: #fff;
             font-weight: 600;
         }
-
-        /* Mobile-First Responsive Tweaks */
-        @media (max-width: 768px) {
-            .app-content-header {
-                padding-top: 0.75rem !important;
-                padding-bottom: 0.75rem !important;
-            }
-            .app-content {
-                padding-top: 0.75rem !important;
-            }
-        }
-        @media (max-width: 576px) {
-            .container-fluid {
-                padding-left: 0.75rem !important;
-                padding-right: 0.75rem !important;
-            }
-            .card-header, .card-body, .card-footer {
-                padding: 0.75rem !important;
-            }
-            .dropdown-menu-lg, .dropdown-menu-end {
-                max-width: calc(100vw - 24px) !important;
-                right: 0 !important;
-                left: auto !important;
-            }
-            .modal-dialog {
-                margin: 0.5rem !important;
-            }
-            .table th, .table td {
-                padding: 0.5rem 0.5rem !important;
-            }
-        }
-        .table-responsive {
-            -webkit-overflow-scrolling: touch;
-        }
     </style>
 </head>
 <!--end::Head-->
@@ -128,19 +241,23 @@
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <!--begin::Header-->
-        <header>
-            <nav class="app-header navbar navbar-expand bg-body">
-                <!--begin::Container-->
-                <div class="container-fluid">
-                    <!--begin::Start Navbar Links-->
-                    <ul class="navbar-nav align-items-center">
-                        <li class="nav-item">
-                            <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button" title="Toggle Sidebar">
-                                <i class="bi bi-list fs-4"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!--end::Start Navbar Links-->
+        <nav class="app-header navbar navbar-expand bg-body shadow-xs">
+            <!--begin::Container-->
+            <div class="container-fluid px-2 px-sm-3">
+                <!--begin::Start Navbar Links-->
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link px-2" data-lte-toggle="sidebar" href="#" role="button" title="Toggle Sidebar">
+                            <i class="bi bi-list fs-4"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item d-md-none">
+                        <a href="{{ route('home') }}" class="nav-link px-1 fw-bold text-dark d-flex align-items-center gap-1">
+                            <span class="badge bg-primary text-white py-1 px-2 rounded-pill">School CMS</span>
+                        </a>
+                    </li>
+                </ul>
+                <!--end::Start Navbar Links-->
 
                     <!--begin::End Navbar Links-->
                     <ul class="navbar-nav ms-auto align-items-center gap-1">
@@ -233,23 +350,26 @@
                 </div>
                 <!--end::Container-->
             </nav>
-        </header>
         <!--end::Header-->
         <!--begin::Sidebar-->
         <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
             <!--begin::Sidebar Brand-->
-            <div class="sidebar-brand">
+            <div class="sidebar-brand d-flex justify-content-between align-items-center px-3">
                 <!--begin::Brand Link-->
-                <a href="{{ route('home') }}" class="brand-link">
+                <a href="{{ route('home') }}" class="brand-link flex-grow-1 text-truncate">
                     <!--begin::Brand Image-->
                     <img src="{{ asset('assets/images/107.jpg') }}" alt="School CMS Logo"
-                        class="brand-image opacity-75 shadow" />
+                        class="brand-image opacity-75 shadow rounded" />
                     <!--end::Brand Image-->
                     <!--begin::Brand Text-->
                     <span class="brand-text fw-semibold">School CMS</span>
                     <!--end::Brand Text-->
                 </a>
                 <!--end::Brand Link-->
+                <!-- Mobile Close Sidebar Button -->
+                <button type="button" class="btn btn-sm btn-link text-white-50 d-lg-none p-1 text-decoration-none" data-lte-toggle="sidebar" title="Close Sidebar">
+                    <i class="bi bi-x-lg fs-5"></i>
+                </button>
             </div>
             <!--end::Sidebar Brand-->
             <!--begin::Sidebar Wrapper-->
@@ -350,7 +470,7 @@
         <!--end::Sidebar-->
 
 
-        <main>
+        <main class="app-main">
             <!-- This is where the main content of each page will be injected -->
             @yield('content')
         </main>
@@ -412,6 +532,32 @@
                     },
                 });
             }
+
+            // Click on sidebar backdrop overlay closes the sidebar on mobile
+            document.addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('sidebar-overlay')) {
+                    document.body.classList.remove('sidebar-open');
+                    document.body.classList.add('sidebar-collapse');
+                }
+            });
+
+            // Close sidebar when clicking any navigation link on mobile
+            document.querySelectorAll('.app-sidebar .sidebar-menu a.nav-link').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    if (window.innerWidth <= 992) {
+                        document.body.classList.remove('sidebar-open');
+                        document.body.classList.add('sidebar-collapse');
+                    }
+                });
+            });
+
+            // Close sidebar when pressing Escape on mobile
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && document.body.classList.contains('sidebar-open')) {
+                    document.body.classList.remove('sidebar-open');
+                    document.body.classList.add('sidebar-collapse');
+                }
+            });
         });
     </script>
     <!--end::OverlayScrollbars Configure-->

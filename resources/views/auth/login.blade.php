@@ -51,6 +51,21 @@
             background: #e0e7ff;
             border-color: #4f46e5;
         }
+        @media (max-width: 575.98px) {
+            body {
+                padding: 12px 8px;
+            }
+            .brand-header {
+                padding: 20px 15px;
+            }
+            .card-body {
+                padding: 1.25rem !important;
+            }
+            .container {
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+        }
     </style>
 </head>
 <body>

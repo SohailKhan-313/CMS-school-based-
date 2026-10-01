@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-shield-lock-fill text-danger me-2"></i>Administration Center</h3>
                 <p class="text-secondary small mb-0">System administration, RBAC security roles, staff overview, and system directories.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0 d-flex flex-wrap justify-content-start justify-content-sm-end align-items-center gap-2">
                 @can('see users')
-                <a href="{{ route('admin.users.pdf') }}" target="_blank" class="btn btn-outline-danger me-2">
+                <a href="{{ route('admin.users.pdf') }}" target="_blank" class="btn btn-outline-danger w-100 w-sm-auto">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Users & Roles PDF
                 </a>
                 @endcan
                 @can('create users')
-                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <a href="{{ route('users.create') }}" class="btn btn-primary w-100 w-sm-auto">
                     <i class="bi bi-person-plus-fill me-1"></i> Create System User
                 </a>
                 @endcan

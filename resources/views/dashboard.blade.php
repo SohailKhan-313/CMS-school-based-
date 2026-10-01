@@ -11,10 +11,10 @@
                 </h3>
                 <p class="text-secondary small mb-0">Live interconnected overview of students, faculty, classes, and financial accounting.</p>
             </div>
-            <div class="col-sm-6 mt-3 mt-sm-0 d-flex justify-content-sm-end">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex justify-content-start justify-content-sm-end">
                 @canany(['print student', 'print teacher', 'print class', 'print fee', 'see users'])
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="btn-group w-100 w-sm-auto">
+                    <button type="button" class="btn btn-outline-danger dropdown-toggle w-100" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-file-earmark-pdf-fill me-1"></i> Quick PDF Reports
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm">
@@ -171,7 +171,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="card-body p-3">
+                    <div class="card-body p-3" style="overflow: hidden; min-width: 0;">
                         <div id="enrollment-chart" style="min-height: 350px; height: 350px; width: 100%;"></div>
                     </div>
                 </div>

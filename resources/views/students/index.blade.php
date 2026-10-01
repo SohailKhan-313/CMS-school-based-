@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-mortarboard-fill text-primary me-2"></i>Students Management</h3>
                 <p class="text-secondary small mb-0">Manage enrolled students, photos, academic records, and printable profile slips.</p>
             </div>
-            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0 d-flex flex-wrap justify-content-start justify-content-sm-end align-items-center gap-2">
                 @can('print student')
-                <a href="{{ route('students.pdf') }}" target="_blank" class="btn btn-outline-danger">
+                <a href="{{ route('students.pdf') }}" target="_blank" class="btn btn-outline-danger w-100 w-sm-auto">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print PDF Directory
                 </a>
                 @endcan
                 @can('create student')
-                <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createStudentModal">
+                <button type="button" class="btn btn-primary shadow-sm w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#createStudentModal">
                     <i class="bi bi-person-plus-fill me-1"></i> Enroll New Student
                 </button>
                 @endcan
@@ -329,13 +329,13 @@
                     {{-- Student Photo Upload Header --}}
                     <div class="card mb-4 bg-light border-0">
                         <div class="card-body p-3">
-                            <div class="d-flex align-items-center gap-3">
+                            <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start gap-3 text-center text-sm-start">
                                 <div>
                                     <img id="studentPhotoPreview" src="https://via.placeholder.com/100?text=No+Photo" 
                                          alt="Preview" class="rounded-circle object-fit-cover border shadow-sm" 
                                          style="width: 72px; height: 72px;">
                                 </div>
-                                <div class="flex-grow-1">
+                                <div class="flex-grow-1 w-100">
                                     <label class="form-label fw-bold mb-1">Student Photo / Avatar</label>
                                     <input type="file" name="photo" id="studentPhotoInput" class="form-control form-control-sm" accept="image/*">
                                     <div class="form-text small">Accepted formats: JPG, PNG, WEBP (Max 2MB). Used for ID cards and profile slips.</div>

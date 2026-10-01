@@ -9,7 +9,7 @@
                 <p class="text-secondary small mb-0">Update your account information, profile avatar picture, and password security.</p>
             </div>
             <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-                <a href="{{ route('home') }}" class="btn btn-outline-secondary">
+                <a href="{{ route('home') }}" class="btn btn-outline-secondary w-100 w-sm-auto">
                     <i class="bi bi-arrow-left me-1"></i> Return to Dashboard
                 </a>
             </div>
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="app-content py-4">
+<div class="app-content py-3 py-sm-4">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -43,13 +43,13 @@
                 @endif
 
                 <div class="card border-0 shadow-sm rounded-3">
-                    <div class="card-body p-4 p-md-5">
+                    <div class="card-body p-3 p-sm-4 p-md-5">
                         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
                             {{-- Profile Avatar Section --}}
-                            <div class="d-flex flex-column flex-sm-row align-items-center gap-4 mb-4 pb-4 border-bottom">
+                            <div class="d-flex flex-column flex-sm-row align-items-center gap-3 gap-sm-4 mb-4 pb-4 border-bottom">
                                 <div class="position-relative">
                                     <img id="userAvatarPreview" 
                                          src="{{ $user->avatar_url }}" 
@@ -57,10 +57,10 @@
                                          class="rounded-circle object-fit-cover shadow border border-3 border-primary" 
                                          style="width: 100px; height: 100px;">
                                 </div>
-                                <div class="flex-grow-1 text-center text-sm-start">
+                                <div class="flex-grow-1 text-center text-sm-start w-100">
                                     <h5 class="fw-bold text-dark mb-1">Profile Picture</h5>
                                     <p class="text-muted small mb-2">Upload a real avatar or photo (JPEG, PNG, WEBP, max 2MB). It will display on your navbar header and profile.</p>
-                                    <input type="file" name="avatar" id="avatarInput" class="form-control form-control-sm w-auto d-inline-block" accept="image/*">
+                                    <input type="file" name="avatar" id="avatarInput" class="form-control form-control-sm w-100 w-sm-auto d-inline-block" accept="image/*">
                                 </div>
                             </div>
 

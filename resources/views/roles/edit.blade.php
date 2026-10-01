@@ -1,50 +1,70 @@
 @extends('layouts.app')
 @section('content')
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-sm-6">
+                <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-pencil-square text-primary me-2"></i>Edit Security Role</h3>
+                <p class="text-secondary small mb-0">Modify role name and adjust privilege authorizations.</p>
+            </div>
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+                <a href="{{ route('roles.index') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Roles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <h2 class="fw-bold fs-4">Edit Role</h2>
-
-    <div class="container mt-5">
-
+<div class="app-content">
+    <div class="container-fluid">
         {{-- Validation Errors --}}
         @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <ul class="mb-0 ps-3">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
 
-        <div class="card shadow">
-            <div class="card-body">
+        <div class="card border-0 shadow-sm" style="max-width: 800px;">
+            <div class="card-body p-4">
                 <form action="{{ route('roles.update', $role->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Role Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ $role->name }}" required>
+                    <div class="mb-4">
+                        <label for="name" class="form-label fw-semibold">Role Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $role->name) }}" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Assign Permissions</label>
-                        <div class="row">
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Assign Permissions</label>
+                        <div class="row g-2">
                             @foreach($permissions as $permission)
-                                <div class="form-check">
-                                    <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
-                                        class="form-check-input">
-                                    <label class="form-check-label">{{ $permission->name }}</label>
+                                <div class="col-12 col-sm-6 col-md-4">
+                                    <div class="form-check p-2 border rounded bg-light">
+                                        <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
+                                            id="perm_{{ $permission->id }}"
+                                            class="form-check-input ms-0 me-2"
+                                            {{ $role->hasPermissionTo($permission->name) ? 'checked' : '' }}>
+                                        <label class="form-check-label small fw-medium" for="perm_{{ $permission->id }}">{{ $permission->name }}</label>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Update Role</button>
-                    <a href="{{ route('roles.index') }}" class="btn btn-secondary">Cancel</a>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-check-circle me-1"></i> Update Role</button>
+                        <a href="{{ route('roles.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
                 </form>
             </div>
         </div>
-
     </div>
+</div>
 @endsection

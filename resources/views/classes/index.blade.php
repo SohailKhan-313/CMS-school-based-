@@ -8,14 +8,14 @@
                 <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-diagram-3-fill text-primary me-2"></i>Classes & Sections</h3>
                 <p class="text-secondary small mb-0">Manage grade levels, sections, assigned class teachers, and room capacities.</p>
             </div>
-            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-sm-end align-items-center gap-2">
+            <div class="col-sm-6 mt-3 mt-sm-0 d-flex flex-wrap justify-content-start justify-content-sm-end align-items-center gap-2">
                 @can('print class')
-                <a href="{{ route('classes.pdf') }}" target="_blank" class="btn btn-outline-danger">
+                <a href="{{ route('classes.pdf') }}" target="_blank" class="btn btn-outline-danger w-100 w-sm-auto">
                     <i class="bi bi-file-earmark-pdf-fill me-1"></i> Print Classes PDF
                 </a>
                 @endcan
                 @can('create class')
-                <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#createClassModal">
+                <button type="button" class="btn btn-primary shadow-sm w-100 w-sm-auto" data-bs-toggle="modal" data-bs-target="#createClassModal">
                     <i class="bi bi-plus-lg me-1"></i> Add New Class
                 </button>
                 @endcan
