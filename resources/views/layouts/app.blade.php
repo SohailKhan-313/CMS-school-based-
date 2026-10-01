@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE v4 | Dashboard</title>
+    <title>@yield('title', 'School Management System - CMS')</title>
 
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -14,12 +14,12 @@
     <!--end::Accessibility Meta Tags-->
 
     <!--begin::Primary Meta Tags-->
-    <meta name="title" content="AdminLTE v4 | Dashboard" />
-    <meta name="author" content="ColorlibHQ" />
+    <meta name="title" content="School Management System - CMS" />
+    <meta name="author" content="Sohail Khan" />
     <meta name="description"
-        content="AdminLTE is a Free Bootstrap 5 Admin Dashboard, 30 example pages using Vanilla JS. Fully accessible with WCAG 2.1 AA compliance." />
+        content="School Management System - Comprehensive administration portal for Students, Teachers, Classes, and Fees." />
     <meta name="keywords"
-        content="bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, colorlibhq, colorlibhq dashboard, colorlibhq admin dashboard, accessible admin panel, WCAG compliant" />
+        content="school management system, cms, students, teachers, classes, fee challan, school admin" />
     <!--end::Primary Meta Tags-->
 
     <!--begin::Accessibility Features-->
@@ -240,13 +240,13 @@
             <!--begin::Sidebar Brand-->
             <div class="sidebar-brand">
                 <!--begin::Brand Link-->
-                <a href="./index.html" class="brand-link">
+                <a href="{{ route('home') }}" class="brand-link">
                     <!--begin::Brand Image-->
-                    <img src="{{ asset('assets/images/107.jpg') }}" alt="AdminLTE Logo"
+                    <img src="{{ asset('assets/images/107.jpg') }}" alt="School CMS Logo"
                         class="brand-image opacity-75 shadow" />
                     <!--end::Brand Image-->
                     <!--begin::Brand Text-->
-                    <span class="brand-text fw-light">CMS</span>
+                    <span class="brand-text fw-semibold">School CMS</span>
                     <!--end::Brand Text-->
                 </a>
                 <!--end::Brand Link-->
@@ -358,12 +358,14 @@
         <!--begin::Footer-->
         <footer class="app-footer">
             <!--begin::To the end-->
-            <div class="float-end d-none d-sm-inline">Anything you want</div>
+            <div class="float-end d-none d-sm-inline fw-semibold text-muted">
+                School Management System
+            </div>
             <!--end::To the end-->
             <!--begin::Copyright-->
             <strong>
-                Copyright &copy; 2014-2025&nbsp;
-                <a href="https://adminlte.io" class="text-decoration-none">AdminLTE.io</a>.
+                Copyright &copy; {{ date('Y') }}&nbsp;
+                <span class="text-primary fw-semibold">Sohail Khan</span>.
             </strong>
             All rights reserved.
             <!--end::Copyright-->

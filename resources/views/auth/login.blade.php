@@ -188,7 +188,7 @@
             </div>
 
             <div class="text-center mt-3 text-white-50 small">
-                &copy; {{ date('Y') }} EduManage SMS &bull; Laravel 12 & Spatie RBAC
+                &copy; {{ date('Y') }} Sohail Khan &bull; School Management System
             </div>
 
         </div>
